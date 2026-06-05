@@ -338,24 +338,6 @@
       background: var(--ant-bg-subtle);
     }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 1px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-
-    .tag-success {
-      color: var(--ant-success);
-      background: var(--ant-success-bg);
-    }
-
-    .tag-error {
-      color: var(--ant-error);
-      background: var(--ant-error-bg);
-    }
-
     .switch {
       position: relative;
       display: inline-block;
@@ -598,7 +580,7 @@
     }
 
     .display-mode-option {
-      padding: 16px;
+      padding: 20px;
       border: 2px solid var(--ant-border-subtle);
       border-radius: var(--ant-radius);
       text-align: center;
@@ -616,12 +598,13 @@
     }
 
     .display-mode-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
+      font-size: 40px;
+      margin-bottom: 12px;
+      line-height: 1;
     }
 
     .display-mode-label {
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .show-table-option {
@@ -629,18 +612,6 @@
       background: var(--ant-bg-subtle);
       border-radius: var(--ant-radius);
       margin-bottom: 16px;
-    }
-
-    .chart-config,
-    .table-config {
-      padding: 16px;
-      background: var(--ant-bg-subtle);
-      border-radius: var(--ant-radius);
-    }
-
-    .config-title {
-      font-weight: 500;
-      margin-bottom: 12px;
     }
 
     .alert {
@@ -817,9 +788,9 @@
             <div></div>
           </div>
           <div class="form-row">
-            <label class="form-field form-field-full">
+            <label class="form-field">
               <span>报表描述</span>
-              <textarea class="textarea" placeholder="请输入报表描述，仅后台可见"></textarea>
+              <input class="input" type="text" placeholder="请输入报表描述，仅后台可见">
             </label>
           </div>
         </div>
@@ -919,7 +890,7 @@
           <div class="section-title">4️⃣ 报表展示样式配置</div>
           <div class="display-mode-options">
             <div class="display-mode-option" onclick="selectDisplayMode('table')">
-              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-icon">📋</div>
               <div class="display-mode-label">表格</div>
             </div>
             <div class="display-mode-option is-active" onclick="selectDisplayMode('bar')">
@@ -941,89 +912,13 @@
           </div>
 
           <div class="show-table-option" id="showTableOption">
-            <label class="switch-wrapper" style="display: flex; align-items: center; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 8px;">
               <label class="switch">
                 <input type="checkbox" id="showTableCheckbox">
                 <span class="switch-slider"></span>
               </label>
               <span>在图形下方展示表格</span>
             </label>
-          </div>
-
-          <div class="chart-config" id="chartConfig">
-            <div class="config-title">图表配置</div>
-            <div class="form-row">
-              <label class="form-field">
-                <span>X轴字段</span>
-                <select class="select">
-                  <option>date</option>
-                  <option>type</option>
-                  <option>status</option>
-                </select>
-              </label>
-              <label class="form-field">
-                <span>Y轴字段</span>
-                <select class="select">
-                  <option>amount</option>
-                  <option>count</option>
-                </select>
-              </label>
-            </div>
-            <div class="form-row">
-              <label class="form-field">
-                <span>图表标题</span>
-                <input class="input" type="text" placeholder="请输入图表标题">
-              </label>
-              <label class="form-field">
-                <span>数据排序</span>
-                <select class="select">
-                  <option>正序</option>
-                  <option>倒序</option>
-                </select>
-              </label>
-            </div>
-          </div>
-
-          <div class="table-config">
-            <div class="config-title">表格配置</div>
-            <div class="form-row">
-              <label class="form-field form-field-full">
-                <span>表格字段展示</span>
-                <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 12px; background: var(--ant-bg-container); border-radius: var(--ant-radius);">
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" checked>
-                    <span>日期 (date)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" checked>
-                    <span>金额 (amount)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" checked>
-                    <span>类型 (type)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox">
-                    <span>状态 (status)</span>
-                  </label>
-                </div>
-              </label>
-            </div>
-            <div class="form-row">
-              <label class="form-field">
-                <span>表格功能</span>
-                <div style="display: flex; gap: 24px;">
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" checked>
-                    <span>分页</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" checked>
-                    <span>数据居中对齐</span>
-                  </label>
-                </div>
-              </label>
-            </div>
           </div>
         </div>
       </div>
@@ -1082,14 +977,11 @@
       event.currentTarget.classList.add('is-active');
       
       const showTableOption = document.getElementById('showTableOption');
-      const chartConfig = document.getElementById('chartConfig');
       
       if (mode === 'table') {
         showTableOption.style.display = 'none';
-        chartConfig.style.display = 'none';
       } else {
         showTableOption.style.display = 'block';
-        chartConfig.style.display = 'block';
       }
     }
 
