@@ -94,6 +94,14 @@
       color: #fff;
     }
 
+    .submenu {
+      padding-left: 16px;
+    }
+
+    .submenu .menu-item {
+      padding: 10px 24px 10px 16px;
+    }
+
     .workspace {
       min-width: 0;
     }
@@ -636,7 +644,12 @@
   <main class="app-shell">
     <aside class="sidebar">
       <nav class="sidebar-menu">
-        <div class="menu-item is-active">数据报表</div>
+        <div class="menu-item">
+          <span>系统管理</span>
+          <div class="submenu">
+            <div class="menu-item is-active">数据报表</div>
+          </div>
+        </div>
       </nav>
     </aside>
     <section class="workspace">
