@@ -809,5 +809,80 @@
       </section>
     </section>
   </main>
+  <script>
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      // 初始化图表相关区域的显示状态
+      const chartTypeSelector = document.querySelector('.chart-type-selector');
+      const chartConfig = document.querySelector('.chart-config');
+      chartTypeSelector.style.display = 'none';
+      chartConfig.style.display = 'none';
+    });
+    
+    // 显示模式选择
+    document.querySelectorAll('.display-mode-option').forEach((option, index) => {
+      option.addEventListener('click', () => {
+        // 清除所有选中状态
+        document.querySelectorAll('.display-mode-option').forEach(o => o.classList.remove('is-active'));
+        // 设置当前选中
+        option.classList.add('is-active');
+        
+        const chartTypeSelector = document.querySelector('.chart-type-selector');
+        const chartConfig = document.querySelector('.chart-config');
+        
+        // 显示/隐藏图表相关配置
+        if (index === 0) {
+          // 仅表格
+          chartTypeSelector.style.display = 'none';
+          chartConfig.style.display = 'none';
+        } else {
+          // 仅图表或图表+表格
+          chartTypeSelector.style.display = 'block';
+          chartConfig.style.display = 'block';
+        }
+      });
+    });
+    
+    // 图表类型选择
+    document.querySelectorAll('.chart-type-option').forEach((option) => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.chart-type-option').forEach(o => o.classList.remove('is-active'));
+        option.classList.add('is-active');
+      });
+    });
+    
+    // 新增查询字段按钮
+    const addFieldBtn = document.querySelector('.toolbar-actions .btn-primary');
+    const queryFieldTable = document.querySelector('.query-field-table tbody');
+    
+    if (addFieldBtn && queryFieldTable) {
+      addFieldBtn.addEventListener('click', () => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td><span class="drag-handle">⋮⋮</span></td>
+          <td><input class="input" type="text" placeholder="字段中文名"></td>
+          <td><input class="input" type="text" placeholder="数据库字段名"></td>
+          <td>
+            <select class="select">
+              <option>下拉选择框</option>
+              <option>输入框</option>
+              <option>日期选择器</option>
+              <option>日期范围选择器</option>
+            </select>
+          </td>
+          <td>
+            <select class="select">
+              <option>否</option>
+              <option>是</option>
+            </select>
+          </td>
+          <td><input class="input" type="text" placeholder="默认值"></td>
+          <td><input class="input" type="text" placeholder="占位提示"></td>
+          <td><button class="btn btn-danger btn-sm" type="button" onclick="this.closest('tr').remove()">删除</button></td>
+        `;
+        queryFieldTable.appendChild(newRow);
+      });
+    }
+  </script>
 </body>
 </html>
