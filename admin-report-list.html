@@ -792,6 +792,16 @@
               <span>报表描述</span>
               <input class="input" type="text" placeholder="请输入报表描述，仅后台可见">
             </label>
+            <label class="form-field">
+              <span>报表展示样式</span>
+              <select class="select" id="displayModeSelect">
+                <option value="table">表格</option>
+                <option value="bar">柱状图</option>
+                <option value="horizontalBar">条形图</option>
+                <option value="line">折线图</option>
+                <option value="pie">饼图</option>
+              </select>
+            </label>
           </div>
         </div>
 
@@ -886,41 +896,7 @@
           </table>
         </div>
 
-        <div class="form-section">
-          <div class="section-title">4️⃣ 报表展示样式配置</div>
-          <div class="display-mode-options">
-            <div class="display-mode-option" onclick="selectDisplayMode('table')">
-              <div class="display-mode-icon">📋</div>
-              <div class="display-mode-label">表格</div>
-            </div>
-            <div class="display-mode-option is-active" onclick="selectDisplayMode('bar')">
-              <div class="display-mode-icon">📊</div>
-              <div class="display-mode-label">柱状图</div>
-            </div>
-            <div class="display-mode-option" onclick="selectDisplayMode('horizontalBar')">
-              <div class="display-mode-icon">📊</div>
-              <div class="display-mode-label">条形图</div>
-            </div>
-            <div class="display-mode-option" onclick="selectDisplayMode('line')">
-              <div class="display-mode-icon">📈</div>
-              <div class="display-mode-label">折线图</div>
-            </div>
-            <div class="display-mode-option" onclick="selectDisplayMode('pie')">
-              <div class="display-mode-icon">🥧</div>
-              <div class="display-mode-label">饼图</div>
-            </div>
-          </div>
 
-          <div class="show-table-option" id="showTableOption">
-            <label style="display: flex; align-items: center; gap: 8px;">
-              <label class="switch">
-                <input type="checkbox" id="showTableCheckbox">
-                <span class="switch-slider"></span>
-              </label>
-              <span>在图形下方展示表格</span>
-            </label>
-          </div>
-        </div>
       </div>
       <div class="modal-footer">
         <button class="btn" onclick="closeReportModal()">取消</button>
@@ -971,17 +947,14 @@
     }
 
     function selectDisplayMode(mode) {
-      document.querySelectorAll('.display-mode-option').forEach(el => {
-        el.classList.remove('is-active');
-      });
-      event.currentTarget.classList.add('is-active');
-      
+      // 下拉菜单模式选择逻辑（如果需要后续扩展可以在这里实现）
       const showTableOption = document.getElementById('showTableOption');
-      
-      if (mode === 'table') {
-        showTableOption.style.display = 'none';
-      } else {
-        showTableOption.style.display = 'block';
+      if (showTableOption) {
+        if (mode === 'table') {
+          showTableOption.style.display = 'none';
+        } else {
+          showTableOption.style.display = 'block';
+        }
       }
     }
 
