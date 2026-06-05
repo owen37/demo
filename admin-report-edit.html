@@ -225,7 +225,7 @@
     .textarea {
       min-height: 88px;
       resize: vertical;
-      font-family: 'Courier New', monospace;
+      font-family: 'Courier New, monospace;
     }
 
     .input::placeholder,
@@ -329,6 +329,57 @@
       gap: 8px;
     }
 
+    .switch-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 22px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--ant-primary);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(22px);
+    }
+
     .sql-editor-wrapper {
       display: flex;
       gap: 8px;
@@ -342,6 +393,47 @@
     .sql-actions {
       display: flex;
       flex-direction: column;
+      gap: 8px;
+    }
+
+    .query-field-list {
+      border: 1px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+    }
+
+    .query-field-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: var(--ant-bg-container);
+      border: 1px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      margin-bottom: 8px;
+    }
+
+    .query-field-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-info {
+      flex: 1;
+    }
+
+    .field-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .field-desc {
+      font-size: 12px;
+      color: var(--ant-text-secondary);
+    }
+
+    .field-actions {
+      display: flex;
       gap: 8px;
     }
 
@@ -379,47 +471,6 @@
       font-size: 13px;
     }
 
-    .chart-type-selector {
-      padding: 16px;
-      background: var(--ant-bg-subtle);
-      border-radius: var(--ant-radius);
-      margin-bottom: 16px;
-    }
-
-    .chart-type-options {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .chart-type-option {
-      padding: 12px;
-      border: 2px solid var(--ant-border-subtle);
-      border-radius: var(--ant-radius);
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .chart-type-option:hover {
-      border-color: var(--ant-primary);
-    }
-
-    .chart-type-option.is-active {
-      border-color: var(--ant-primary);
-      background: var(--ant-info-bg);
-    }
-
-    .chart-type-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .chart-type-label {
-      font-size: 12px;
-    }
-
     .chart-config,
     .table-config {
       padding: 16px;
@@ -440,6 +491,60 @@
       border-top: 1px solid var(--ant-border-subtle);
     }
 
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      width: 520px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--ant-text-secondary);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ant-border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
     .alert {
       padding: 12px 16px;
       border-radius: var(--ant-radius);
@@ -458,41 +563,6 @@
       border: 1px solid var(--ant-error);
     }
 
-    /* 查询字段子表样式 */
-    .query-field-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .query-field-table th,
-    .query-field-table td {
-      padding: 12px 8px;
-      border-bottom: 1px solid var(--ant-border-subtle);
-      text-align: left;
-    }
-
-    .query-field-table th {
-      background: var(--ant-bg-subtle);
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .query-field-table .input,
-    .query-field-table .select {
-      min-height: 28px;
-      font-size: 13px;
-    }
-
-    .drag-handle {
-      cursor: grab;
-      color: var(--ant-text-secondary);
-      font-size: 16px;
-    }
-
-    .drag-handle:hover {
-      color: var(--ant-primary);
-    }
-
     @media (max-width: 960px) {
       .app-shell {
         grid-template-columns: 1fr;
@@ -507,10 +577,6 @@
       }
 
       .display-mode-options {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .chart-type-options {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -534,10 +600,6 @@
       }
 
       .display-mode-options {
-        grid-template-columns: 1fr;
-      }
-
-      .chart-type-options {
         grid-template-columns: 1fr;
       }
     }
@@ -590,6 +652,18 @@
               <textarea class="textarea" placeholder="请输入报表描述，仅后台可见"></textarea>
             </label>
           </div>
+          <div class="form-row">
+            <label class="form-field">
+              <span>报表状态</span>
+              <div class="switch-wrapper">
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+                <span>启用</span>
+              </div>
+            </label>
+          </div>
         </div>
 
         <!-- SQL数据源配置 -->
@@ -614,70 +688,33 @@
 
         <!-- 查询字段配置 -->
         <div class="form-section">
+          <div class="section-title">3️⃣ 查询字段配置</div>
           <div class="card-toolbar" style="margin-bottom: 12px;">
-            <div class="section-title" style="margin-bottom: 0;">3️⃣ 查询字段配置</div>
-            <button class="btn btn-primary btn-sm" type="button">➕ 新增字段</button>
+            <span></span>
+            <button class="btn btn-primary btn-sm" type="button">➕ 新增查询字段</button>
           </div>
-          <table class="query-field-table">
-            <thead>
-              <tr>
-                <th style="width: 40px;"></th>
-                <th style="min-width: 140px;">字段中文名 *</th>
-                <th style="min-width: 140px;">数据库字段名 *</th>
-                <th style="min-width: 140px;">组件类型 *</th>
-                <th style="min-width: 100px;">是否必填</th>
-                <th style="min-width: 140px;">默认值</th>
-                <th style="min-width: 140px;">占位提示</th>
-                <th style="width: 80px;">操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="drag-handle">⋮⋮</span></td>
-                <td><input class="input" type="text" value="创建时间"></td>
-                <td><input class="input" type="text" value="create_date"></td>
-                <td>
-                  <select class="select">
-                    <option>下拉选择框</option>
-                    <option>输入框</option>
-                    <option>日期选择器</option>
-                    <option selected>日期范围选择器</option>
-                  </select>
-                </td>
-                <td>
-                  <select class="select">
-                    <option>否</option>
-                    <option selected>是</option>
-                  </select>
-                </td>
-                <td><input class="input" type="text" placeholder=""></td>
-                <td><input class="input" type="text" placeholder="请选择创建时间"></td>
-                <td><button class="btn btn-danger btn-sm" type="button">删除</button></td>
-              </tr>
-              <tr>
-                <td><span class="drag-handle">⋮⋮</span></td>
-                <td><input class="input" type="text" value="订单状态"></td>
-                <td><input class="input" type="text" value="status"></td>
-                <td>
-                  <select class="select">
-                    <option selected>下拉选择框</option>
-                    <option>输入框</option>
-                    <option>日期选择器</option>
-                    <option>日期范围选择器</option>
-                  </select>
-                </td>
-                <td>
-                  <select class="select">
-                    <option selected>否</option>
-                    <option>是</option>
-                  </select>
-                </td>
-                <td><input class="input" type="text" placeholder=""></td>
-                <td><input class="input" type="text" placeholder="请选择订单状态"></td>
-                <td><button class="btn btn-danger btn-sm" type="button">删除</button></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="query-field-list">
+            <div class="query-field-item">
+              <div class="field-info">
+                <div class="field-name">创建时间</div>
+                <div class="field-desc">数据库字段: create_date | 组件: 日期范围选择器 | 必填: 是</div>
+              </div>
+              <div class="field-actions">
+                <button class="btn btn-sm" type="button">编辑</button>
+                <button class="btn btn-danger btn-sm" type="button">删除</button>
+              </div>
+            </div>
+            <div class="query-field-item">
+              <div class="field-info">
+                <div class="field-name">订单状态</div>
+                <div class="field-desc">数据库字段: status | 组件: 下拉选择框 | 必填: 否</div>
+              </div>
+              <div class="field-actions">
+                <button class="btn btn-sm" type="button">编辑</button>
+                <button class="btn btn-danger btn-sm" type="button">删除</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 报表展示样式配置 -->
@@ -690,7 +727,19 @@
             </div>
             <div class="display-mode-option">
               <div class="display-mode-icon">📈</div>
-              <div class="display-mode-label">仅图表</div>
+              <div class="display-mode-label">仅折线图</div>
+            </div>
+            <div class="display-mode-option">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">仅柱状图</div>
+            </div>
+            <div class="display-mode-option">
+              <div class="display-mode-icon">🥧</div>
+              <div class="display-mode-label">仅饼图</div>
+            </div>
+            <div class="display-mode-option">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">仅条形图</div>
             </div>
             <div class="display-mode-option">
               <div class="display-mode-icon">📊 + 📈</div>
@@ -698,31 +747,8 @@
             </div>
           </div>
 
-          <!-- 图表类型选择 -->
-          <div class="chart-type-selector" style="display: none;">
-            <div class="config-title">选择图表类型</div>
-            <div class="chart-type-options">
-              <div class="chart-type-option is-active">
-                <div class="chart-type-icon">📈</div>
-                <div class="chart-type-label">折线图</div>
-              </div>
-              <div class="chart-type-option">
-                <div class="chart-type-icon">📊</div>
-                <div class="chart-type-label">柱状图</div>
-              </div>
-              <div class="chart-type-option">
-                <div class="chart-type-icon">🥧</div>
-                <div class="chart-type-label">饼图</div>
-              </div>
-              <div class="chart-type-option">
-                <div class="chart-type-icon">📊</div>
-                <div class="chart-type-label">条形图</div>
-              </div>
-            </div>
-          </div>
-
           <!-- 图表配置 -->
-          <div class="chart-config" style="display: none; margin-top: 16px;">
+          <div class="chart-config" style="display: none;">
             <div class="config-title">图表配置</div>
             <div class="form-row">
               <label class="form-field">
@@ -809,80 +835,55 @@
       </section>
     </section>
   </main>
-  <script>
-    // 页面初始化
-    document.addEventListener('DOMContentLoaded', () => {
-      // 初始化图表相关区域的显示状态
-      const chartTypeSelector = document.querySelector('.chart-type-selector');
-      const chartConfig = document.querySelector('.chart-config');
-      chartTypeSelector.style.display = 'none';
-      chartConfig.style.display = 'none';
-    });
-    
-    // 显示模式选择
-    document.querySelectorAll('.display-mode-option').forEach((option, index) => {
-      option.addEventListener('click', () => {
-        // 清除所有选中状态
-        document.querySelectorAll('.display-mode-option').forEach(o => o.classList.remove('is-active'));
-        // 设置当前选中
-        option.classList.add('is-active');
-        
-        const chartTypeSelector = document.querySelector('.chart-type-selector');
-        const chartConfig = document.querySelector('.chart-config');
-        
-        // 显示/隐藏图表相关配置
-        if (index === 0) {
-          // 仅表格
-          chartTypeSelector.style.display = 'none';
-          chartConfig.style.display = 'none';
-        } else {
-          // 仅图表或图表+表格
-          chartTypeSelector.style.display = 'block';
-          chartConfig.style.display = 'block';
-        }
-      });
-    });
-    
-    // 图表类型选择
-    document.querySelectorAll('.chart-type-option').forEach((option) => {
-      option.addEventListener('click', () => {
-        document.querySelectorAll('.chart-type-option').forEach(o => o.classList.remove('is-active'));
-        option.classList.add('is-active');
-      });
-    });
-    
-    // 新增查询字段按钮
-    const addFieldBtn = document.querySelector('.toolbar-actions .btn-primary');
-    const queryFieldTable = document.querySelector('.query-field-table tbody');
-    
-    if (addFieldBtn && queryFieldTable) {
-      addFieldBtn.addEventListener('click', () => {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-          <td><span class="drag-handle">⋮⋮</span></td>
-          <td><input class="input" type="text" placeholder="字段中文名"></td>
-          <td><input class="input" type="text" placeholder="数据库字段名"></td>
-          <td>
+
+  <!-- 新增查询字段弹窗 -->
+  <div class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">新增查询字段</h3>
+        <button class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row" style="margin-bottom: 0;">
+          <label class="form-field">
+            <span>字段中文名 <span style="color: var(--ant-error);">*</span></span>
+            <input class="input" type="text" placeholder="请输入字段中文名">
+          </label>
+          <label class="form-field">
+            <span>数据库字段名 <span style="color: var(--ant-error);">*</span></span>
+            <input class="input" type="text" placeholder="请输入数据库字段名">
+          </label>
+          <label class="form-field">
+            <span>组件类型 <span style="color: var(--ant-error);">*</span></span>
             <select class="select">
               <option>下拉选择框</option>
               <option>输入框</option>
               <option>日期选择器</option>
               <option>日期范围选择器</option>
             </select>
-          </td>
-          <td>
+          </label>
+          <label class="form-field">
+            <span>是否必填</span>
             <select class="select">
               <option>否</option>
               <option>是</option>
             </select>
-          </td>
-          <td><input class="input" type="text" placeholder="默认值"></td>
-          <td><input class="input" type="text" placeholder="占位提示"></td>
-          <td><button class="btn btn-danger btn-sm" type="button" onclick="this.closest('tr').remove()">删除</button></td>
-        `;
-        queryFieldTable.appendChild(newRow);
-      });
-    }
-  </script>
+          </label>
+          <label class="form-field">
+            <span>默认值</span>
+            <input class="input" type="text" placeholder="请输入默认值">
+          </label>
+          <label class="form-field form-field-full">
+            <span>占位提示文字</span>
+            <input class="input" type="text" placeholder="请输入占位提示文字">
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn">取消</button>
+        <button class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
