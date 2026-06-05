@@ -772,7 +772,7 @@
         <button class="modal-close" onclick="closeReportModal()">×</button>
       </div>
       <div class="modal-body">
-        <div class="form-section">
+        <div class="form-section" style="margin-bottom: 0; padding-bottom: 0;">
           <div class="form-row">
             <label class="form-field">
               <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
@@ -798,11 +798,11 @@
           </div>
         </div>
 
-        <div class="form-section" style="padding-top: 0;">
+        <div class="form-section" style="padding-top: 0; margin-bottom: 0; padding-bottom: 0;">
           <div class="form-row">
             <label class="form-field form-field-full">
               <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
-              <textarea class="textarea" style="min-height: 150px;" placeholder="SELECT date, amount, type FROM sales_table WHERE date BETWEEN :start_date AND :end_date"></textarea>
+              <textarea class="textarea" style="min-height: 150px;" placeholder="select date,type from table where tenant_id=${tenant_id}"></textarea>
             </label>
           </div>
           <div class="alert alert-success" style="display: none;">
@@ -837,7 +837,7 @@
                     <option selected>日期范围选择器</option>
                   </select>
                 </td>
-                <td><input class="input" type="text" placeholder="多个值用逗号分隔" disabled style="background: var(--ant-bg-layout);"></td>
+                <td><input class="input" type="text" placeholder="请输入" disabled style="background: var(--ant-bg-layout);"></td>
                 <td><input class="input" type="text" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请选择日期"></td>
                 <td>
@@ -856,7 +856,7 @@
                     <option>日期范围选择器</option>
                   </select>
                 </td>
-                <td><input class="input" type="text" value="待处理,已完成,已取消" placeholder="多个值用逗号分隔"></td>
+                <td><input class="input" type="text" value="待处理,已完成,已取消" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请选择状态"></td>
                 <td>
