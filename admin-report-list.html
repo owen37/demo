@@ -778,15 +778,14 @@
               <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
               <input class="input" type="text" placeholder="请输入报表名称">
             </label>
-            <div></div>
-          </div>
-          <div class="form-row">
             <label class="form-field">
               <span>报表描述</span>
               <input class="input" type="text" placeholder="请输入报表描述，仅后台可见">
             </label>
+          </div>
+          <div class="form-row">
             <label class="form-field">
-              <span>报表展示样式</span>
+              <span>报表展示样式 <span style="color: var(--ant-error);">*</span></span>
               <select class="select" id="displayModeSelect">
                 <option value="table">表格</option>
                 <option value="bar">柱状图</option>
@@ -795,10 +794,11 @@
                 <option value="pie">饼图</option>
               </select>
             </label>
+            <div></div>
           </div>
         </div>
 
-        <div class="form-section">
+        <div class="form-section" style="padding-top: 0;">
           <div class="form-row">
             <label class="form-field form-field-full">
               <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
