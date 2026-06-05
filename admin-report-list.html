@@ -657,16 +657,15 @@
         </div>
       </header>
 
-      <section class="page-header">
-        <h1 class="page-title">报表列表</h1>
-        <p class="page-desc">管理系统所有已创建的报表条目，支持增删改查全量操作</p>
-      </section>
-
       <section class="filter-panel">
         <form class="filter-row">
           <label class="form-field">
             <span>报表名称</span>
             <input class="input" type="text" placeholder="请输入报表名称">
+          </label>
+          <label class="form-field">
+            <span>报表描述</span>
+            <input class="input" type="text" placeholder="请输入报表描述">
           </label>
           <label class="form-field">
             <span>报表状态</span>
@@ -676,7 +675,6 @@
               <option value="disabled">禁用</option>
             </select>
           </label>
-          <div></div>
           <div class="filter-actions">
             <button class="btn" type="button">重置</button>
             <button class="btn btn-primary" type="button">查询</button>
@@ -688,8 +686,7 @@
         <header class="card-toolbar">
           <h2 class="toolbar-title">报表列表</h2>
           <div class="toolbar-actions">
-            <button class="btn" type="button">🔄 刷新列表</button>
-            <button class="btn btn-primary" type="button" onclick="openCreateModal()">➕ 新增报表</button>
+            <button class="btn btn-primary" type="button" onclick="openCreateModal()">+ 新增报表</button>
           </div>
         </header>
         <table class="pro-table">
@@ -698,6 +695,7 @@
               <th>序号</th>
               <th>报表名称</th>
               <th>报表描述</th>
+              <th>创建人</th>
               <th>创建时间</th>
               <th>更新时间</th>
               <th>报表状态</th>
@@ -709,6 +707,7 @@
               <td>1</td>
               <td>销售日报表</td>
               <td>每日销售数据统计分析</td>
+              <td>张三</td>
               <td>2024-01-15 09:30:00</td>
               <td>2024-01-20 14:20:00</td>
               <td>
@@ -726,6 +725,7 @@
               <td>2</td>
               <td>订单统计报表</td>
               <td>各类型订单数据汇总</td>
+              <td>李四</td>
               <td>2024-01-10 16:45:00</td>
               <td>2024-01-18 11:10:00</td>
               <td>
@@ -743,6 +743,7 @@
               <td>3</td>
               <td>用户增长报表</td>
               <td>新增用户数据趋势分析</td>
+              <td>王五</td>
               <td>2024-01-05 10:20:00</td>
               <td>2024-01-12 09:00:00</td>
               <td>
