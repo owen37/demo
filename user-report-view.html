@@ -393,22 +393,17 @@
   <main class="app-shell">
     <aside class="sidebar">
       <nav class="sidebar-menu">
-        <div class="menu-item is-active">工单趋势</div>
+        <div class="menu-item is-active">销售数据</div>
       </nav>
     </aside>
     <section class="workspace">
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumb">
-            <a href="index.html">首页</a> / 报表展示
+            <a href="index.html">首页</a> / 销售数据
           </div>
         </div>
-        <div class="topbar-right">
-          <div class="user-info">
-            <span>👤</span>
-            <span>普通用户</span>
-          </div>
-        </div>
+        <div class="topbar-right"></div>
       </header>
 
       <!-- 查询筛选区域 -->
@@ -450,46 +445,43 @@
         </div>
 
         <!-- 表格区域 -->
-        <h3 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">数据明细</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: 16px; font-weight: 600;">数据明细</h3>
+          <button class="btn btn-primary" type="button">下载</button>
+        </div>
         <table class="pro-table">
           <thead>
             <tr>
               <th>日期</th>
-              <th>金额</th>
               <th>类型</th>
-              <th>状态</th>
+              <th>金额</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>2024-01-01</td>
-              <td>¥12,580.00</td>
               <td>商品销售</td>
-              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+              <td>¥12,580.00</td>
             </tr>
             <tr>
               <td>2024-01-02</td>
-              <td>¥8,960.00</td>
               <td>服务收入</td>
-              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+              <td>¥8,960.00</td>
             </tr>
             <tr>
               <td>2024-01-03</td>
-              <td>¥15,240.00</td>
               <td>商品销售</td>
-              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-warning-bg); color: var(--ant-warning);">待处理</span></td>
+              <td>¥15,240.00</td>
             </tr>
             <tr>
               <td>2024-01-04</td>
-              <td>¥6,780.00</td>
               <td>商品销售</td>
-              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-error-bg); color: var(--ant-error);">已取消</span></td>
+              <td>¥6,780.00</td>
             </tr>
             <tr>
               <td>2024-01-05</td>
-              <td>¥19,850.00</td>
               <td>服务收入</td>
-              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+              <td>¥19,850.00</td>
             </tr>
           </tbody>
         </table>
