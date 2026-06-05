@@ -52,6 +52,24 @@
       font: inherit;
     }
 
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="date"]::-moz-calendar-picker-indicator {
+      display: none;
+    }
+    input[type="date"]::-ms-clear {
+      display: none;
+    }
+    input[type="date"]::-ms-expand {
+      display: none;
+    }
+
     .app-shell {
       min-height: 100vh;
       display: grid;
@@ -438,20 +456,6 @@
         <!-- 图表区域 -->
         <div class="chart-container" style="padding: 20px;">
           <style>
-            input[type="date"]::-webkit-calendar-picker-indicator {
-              display: none;
-            }
-            input[type="date"]::-webkit-inner-spin-button,
-            input[type="date"]::-webkit-outer-spin-button {
-              -webkit-appearance: none;
-              margin: 0;
-            }
-            input[type="date"]::-moz-calendar-picker-indicator {
-              display: none;
-            }
-            input[type="date"]::-ms-clear {
-              display: none;
-            }
             .bar-chart {
               position: relative;
               width: 100%;
@@ -522,7 +526,7 @@
             }
             .bar-label {
               position: absolute;
-              bottom: -35px;
+              bottom: -25px;
               left: 50%;
               transform: translateX(-50%);
               font-size: 12px;
