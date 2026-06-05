@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>报表展示 - 报表管理系统</title>
+  <style>
+    :root {
+      --ant-primary: #1677ff;
+      --ant-primary-hover: #4096ff;
+      --ant-primary-active: #0958d9;
+      --ant-success: #52c41a;
+      --ant-warning: #faad14;
+      --ant-error: #ff4d4f;
+      --ant-info-bg: #e6f4ff;
+      --ant-success-bg: #f6ffed;
+      --ant-warning-bg: #fffbe6;
+      --ant-error-bg: #fff2f0;
+      --ant-bg-layout: #f5f5f5;
+      --ant-bg-container: #ffffff;
+      --ant-bg-elevated: #ffffff;
+      --ant-bg-subtle: #fafafa;
+      --ant-border: #d9d9d9;
+      --ant-border-subtle: #f0f0f0;
+      --ant-text: #262626;
+      --ant-text-secondary: #8c8c8c;
+      --ant-text-disabled: #bfbfbf;
+      --ant-radius: 6px;
+      --ant-radius-lg: 8px;
+      --ant-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --ant-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ant-bg-layout);
+      color: var(--ant-text);
+      font-family: var(--ant-font);
+      font-size: 14px;
+      line-height: 1.5715;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 224px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #001529;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 16px 0;
+    }
+
+    .sidebar-logo {
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-menu {
+      padding: 8px 0;
+    }
+
+    .menu-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .menu-item.is-active {
+      background: var(--ant-primary);
+      color: #fff;
+    }
+
+    .workspace {
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      background: var(--ant-bg-container);
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      color: var(--ant-text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--ant-text-secondary);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--ant-primary);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-header,
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card,
+    .metric-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-card);
+    }
+
+    .page-header {
+      margin: 24px 24px 16px;
+      padding: 20px 24px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .page-desc {
+      margin: 8px 0 0;
+      color: var(--ant-text-secondary);
+    }
+
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card {
+      margin: 16px 24px;
+      padding: 24px;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 8px;
+      color: var(--ant-text);
+      min-width: 200px;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      min-height: 32px;
+      padding: 4px 11px;
+      color: var(--ant-text);
+      background: var(--ant-bg-container);
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: var(--ant-text-disabled);
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: var(--ant-primary);
+      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12);
+    }
+
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 15px;
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      background: var(--ant-bg-container);
+      color: var(--ant-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      color: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+    }
+
+    .btn-primary {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+      color: #fff;
+    }
+
+    .pro-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--ant-bg-container);
+    }
+
+    .pro-table th,
+    .pro-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .pro-table th {
+      background: var(--ant-bg-subtle);
+      color: var(--ant-text);
+      font-weight: 600;
+    }
+
+    .pro-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .pagination .btn {
+      min-width: 32px;
+      padding: 4px 8px;
+    }
+
+    .pagination .btn.is-active {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .chart-placeholder {
+      text-align: center;
+      color: var(--ant-text-secondary);
+    }
+
+    .chart-placeholder .icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .report-tabs {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      padding-bottom: 0;
+    }
+
+    .report-tab {
+      padding: 12px 0;
+      cursor: pointer;
+      color: var(--ant-text-secondary);
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .report-tab:hover {
+      color: var(--ant-text);
+    }
+
+    .report-tab.is-active {
+      color: var(--ant-primary);
+      border-bottom-color: var(--ant-primary);
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .form-field {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        height: auto;
+        padding-block: 16px;
+      }
+
+      .filter-panel,
+      .data-card,
+      .form-card,
+      .detail-card,
+      .page-header {
+        margin-inline: 16px;
+        padding: 16px;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo">📊 报表管理系统</div>
+      <nav class="sidebar-menu">
+        <a href="admin-report-list.html" class="menu-item">管理端</a>
+        <div class="menu-item is-active">报表展示</div>
+      </nav>
+    </aside>
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumb">
+            <a href="index.html">首页</a> / 报表展示
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="user-info">
+            <span>👤</span>
+            <span>普通用户</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="page-header">
+        <h1 class="page-title">销售日报表</h1>
+        <p class="page-desc">每日销售数据统计分析</p>
+      </section>
+
+      <!-- 报表选择器 -->
+      <section class="data-card" style="padding: 16px 24px;">
+        <div class="report-tabs">
+          <div class="report-tab is-active">销售日报表</div>
+          <div class="report-tab">订单统计报表</div>
+          <div class="report-tab" style="color: var(--ant-text-disabled); cursor: not-allowed;">用户增长报表 (已禁用)</div>
+        </div>
+      </section>
+
+      <!-- 查询筛选区域 -->
+      <section class="filter-panel">
+        <div class="filter-row">
+          <label class="form-field">
+            <span>创建时间 <span style="color: var(--ant-error);">*</span></span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input class="input" type="date" value="2024-01-01">
+              <span>至</span>
+              <input class="input" type="date" value="2024-01-31">
+            </div>
+          </label>
+          <label class="form-field">
+            <span>订单状态</span>
+            <select class="select">
+              <option value="">全部</option>
+              <option value="pending">待处理</option>
+              <option value="completed">已完成</option>
+              <option value="cancelled">已取消</option>
+            </select>
+          </label>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn" type="button">重置</button>
+            <button class="btn btn-primary" type="button">查询</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 报表展示区域 - 图表+表格组合模式 -->
+      <section class="data-card">
+        <!-- 图表区域 -->
+        <div class="chart-container">
+          <div class="chart-placeholder">
+            <div class="icon">📊</div>
+            <div style="font-size: 16px; margin-bottom: 8px;">销售数据趋势图</div>
+            <div style="font-size: 12px; color: var(--ant-text-secondary);">（此处展示折线图/柱状图/饼图/条形图）</div>
+          </div>
+        </div>
+
+        <!-- 表格区域 -->
+        <h3 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">数据明细</h3>
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>金额</th>
+              <th>类型</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-01-01</td>
+              <td>¥12,580.00</td>
+              <td>商品销售</td>
+              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+            </tr>
+            <tr>
+              <td>2024-01-02</td>
+              <td>¥8,960.00</td>
+              <td>服务收入</td>
+              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+            </tr>
+            <tr>
+              <td>2024-01-03</td>
+              <td>¥15,240.00</td>
+              <td>商品销售</td>
+              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-warning-bg); color: var(--ant-warning);">待处理</span></td>
+            </tr>
+            <tr>
+              <td>2024-01-04</td>
+              <td>¥6,780.00</td>
+              <td>商品销售</td>
+              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-error-bg); color: var(--ant-error);">已取消</span></td>
+            </tr>
+            <tr>
+              <td>2024-01-05</td>
+              <td>¥19,850.00</td>
+              <td>服务收入</td>
+              <td><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--ant-success-bg); color: var(--ant-success);">已完成</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span style="color: var(--ant-text-secondary); margin-right: 16px;">共 56 条记录</span>
+          <button class="btn">&lt;</button>
+          <button class="btn is-active">1</button>
+          <button class="btn">2</button>
+          <button class="btn">3</button>
+          <button class="btn">4</button>
+          <button class="btn">5</button>
+          <button class="btn">&gt;</button>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
