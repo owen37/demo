@@ -42,6 +42,7 @@
       font-family: var(--ant-font);
       font-size: 14px;
       line-height: 1.5715;
+      min-width: 1400px;
     }
 
     button,
@@ -79,6 +80,9 @@
       padding: 12px 24px;
       cursor: pointer;
       transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
     }
 
     .menu-item:hover {
@@ -175,7 +179,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(160px, 1fr));
       gap: 16px;
-      align-items: end;
+      align-items: flex-end;
     }
 
     .filter-actions {
@@ -340,6 +344,51 @@
       background: var(--ant-error-bg);
     }
 
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 22px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--ant-primary);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(22px);
+    }
+
     .pagination {
       display: flex;
       justify-content: flex-end;
@@ -412,88 +461,6 @@
       justify-content: flex-end;
       gap: 8px;
     }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 22px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .switch-slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.3s;
-      border-radius: 22px;
-    }
-
-    .switch-slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 2px;
-      bottom: 2px;
-      background-color: white;
-      transition: 0.3s;
-      border-radius: 50%;
-    }
-
-    input:checked + .switch-slider {
-      background-color: var(--ant-primary);
-    }
-
-    input:checked + .switch-slider:before {
-      transform: translateX(22px);
-    }
-
-    @media (max-width: 960px) {
-      .app-shell {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        display: none;
-      }
-
-      .filter-row {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .topbar,
-      .card-toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-        height: auto;
-        padding-block: 16px;
-      }
-
-      .filter-row {
-        grid-template-columns: 1fr;
-      }
-
-      .filter-panel,
-      .data-card,
-      .form-card,
-      .detail-card,
-      .page-header {
-        margin-inline: 16px;
-        padding: 16px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -502,8 +469,8 @@
       <div class="sidebar-logo">📊 报表管理系统</div>
       <nav class="sidebar-menu">
         <div class="menu-item is-active">报表列表</div>
-        <a href="admin-report-edit.html" class="menu-item" style="color: inherit; text-decoration: none;">新增报表</a>
-        <a href="user-report-view.html" class="menu-item" style="color: inherit; text-decoration: none;">用户端预览</a>
+        <a href="admin-report-edit.html" class="menu-item">新增报表</a>
+        <a href="user-report-view.html" class="menu-item">用户端预览</a>
       </nav>
     </aside>
     <section class="workspace">
@@ -575,10 +542,14 @@
               <td>每日销售数据统计分析</td>
               <td>2024-01-15 09:30:00</td>
               <td>2024-01-20 14:20:00</td>
-              <td><span class="tag tag-success">启用</span></td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
               <td>
                 <a class="link">编辑</a>
-                <a class="link">禁用</a>
                 <a class="link" style="color: var(--ant-error);">删除</a>
               </td>
             </tr>
@@ -588,10 +559,14 @@
               <td>各类型订单数据汇总</td>
               <td>2024-01-10 16:45:00</td>
               <td>2024-01-18 11:10:00</td>
-              <td><span class="tag tag-success">启用</span></td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
               <td>
                 <a class="link">编辑</a>
-                <a class="link">禁用</a>
                 <a class="link" style="color: var(--ant-error);">删除</a>
               </td>
             </tr>
@@ -601,10 +576,14 @@
               <td>新增用户数据趋势分析</td>
               <td>2024-01-05 10:20:00</td>
               <td>2024-01-12 09:00:00</td>
-              <td><span class="tag tag-error">禁用</span></td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
               <td>
                 <a class="link">编辑</a>
-                <a class="link">启用</a>
                 <a class="link" style="color: var(--ant-error);">删除</a>
               </td>
             </tr>
