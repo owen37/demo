@@ -779,7 +779,7 @@
       </div>
       <div class="modal-body">
         <div class="form-section">
-          <div class="section-title">1️⃣ 基础信息配置</div>
+          <div class="section-title">基础信息配置</div>
           <div class="form-row">
             <label class="form-field">
               <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
@@ -806,17 +806,11 @@
         </div>
 
         <div class="form-section">
-          <div class="section-title">2️⃣ SQL数据源配置</div>
+          <div class="section-title">SQL数据源配置</div>
           <div class="form-row">
             <label class="form-field form-field-full">
               <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
-              <div class="sql-editor-wrapper">
-                <textarea class="textarea" style="min-height: 150px;" placeholder="SELECT date, amount, type FROM sales_table WHERE date BETWEEN :start_date AND :end_date"></textarea>
-                <div class="sql-actions">
-                  <button class="btn btn-success btn-sm" type="button">测试SQL</button>
-                  <button class="btn btn-sm" type="button">清空</button>
-                </div>
-              </div>
+              <textarea class="textarea" style="min-height: 150px;" placeholder="SELECT date, amount, type FROM sales_table WHERE date BETWEEN :start_date AND :end_date"></textarea>
             </label>
           </div>
           <div class="alert alert-success" style="display: none;">
@@ -825,7 +819,7 @@
         </div>
 
         <div class="form-section">
-          <div class="section-title">3️⃣ 查询字段配置</div>
+          <div class="section-title">查询字段配置</div>
           <div class="card-toolbar" style="margin-bottom: 12px;">
             <span></span>
             <button class="btn btn-primary btn-sm" type="button">➕ 新增查询字段</button>
@@ -837,7 +831,7 @@
                 <th>字段中文名</th>
                 <th>数据库字段名</th>
                 <th>组件类型</th>
-                <th>是否必填</th>
+                <th>枚举值</th>
                 <th>默认值</th>
                 <th>占位提示</th>
                 <th style="width: 100px;">操作</th>
@@ -856,12 +850,7 @@
                     <option selected>日期范围选择器</option>
                   </select>
                 </td>
-                <td>
-                  <select class="select">
-                    <option>否</option>
-                    <option selected>是</option>
-                  </select>
-                </td>
+                <td><input class="input" type="text" placeholder="多个值用逗号分隔" disabled style="background: var(--ant-bg-layout);"></td>
                 <td><input class="input" type="text" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请选择日期"></td>
                 <td>
@@ -880,12 +869,7 @@
                     <option>日期范围选择器</option>
                   </select>
                 </td>
-                <td>
-                  <select class="select">
-                    <option selected>否</option>
-                    <option>是</option>
-                  </select>
-                </td>
+                <td><input class="input" type="text" value="待处理,已完成,已取消" placeholder="多个值用逗号分隔"></td>
                 <td><input class="input" type="text" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请选择状态"></td>
                 <td>
