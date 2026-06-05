@@ -412,9 +412,9 @@
           <label class="form-field">
             <span>创建时间 <span style="color: var(--ant-error);">*</span></span>
             <div style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--ant-border); border-radius: var(--ant-radius); padding: 4px 8px; background: var(--ant-bg-container);">
-              <input class="input" type="date" value="2024-01-01" style="border: none; padding: 0; min-height: auto;">
+              <input class="input" type="date" value="2024-01-01" style="border: none; padding: 0; min-height: auto; -webkit-appearance: none; appearance: none; background: transparent;">
               <span style="color: var(--ant-text-secondary);">至</span>
-              <input class="input" type="date" value="2024-01-31" style="border: none; padding: 0; min-height: auto;">
+              <input class="input" type="date" value="2024-01-31" style="border: none; padding: 0; min-height: auto; -webkit-appearance: none; appearance: none; background: transparent;">
             </div>
           </label>
           <label class="form-field">
@@ -438,6 +438,20 @@
         <!-- 图表区域 -->
         <div class="chart-container" style="padding: 20px;">
           <style>
+            input[type="date"]::-webkit-calendar-picker-indicator {
+              display: none;
+            }
+            input[type="date"]::-webkit-inner-spin-button,
+            input[type="date"]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            input[type="date"]::-moz-calendar-picker-indicator {
+              display: none;
+            }
+            input[type="date"]::-ms-clear {
+              display: none;
+            }
             .bar-chart {
               position: relative;
               width: 100%;
