@@ -210,6 +210,7 @@
     .textarea {
       min-height: 88px;
       resize: vertical;
+      font-family: 'Courier New', monospace;
     }
 
     .input::placeholder,
@@ -257,9 +258,20 @@
       color: #fff;
     }
 
+    .btn-success {
+      color: var(--ant-success);
+      border-color: var(--ant-success);
+    }
+
     .btn-danger {
       color: var(--ant-error);
       border-color: var(--ant-error);
+    }
+
+    .btn-sm {
+      min-height: 28px;
+      padding: 2px 12px;
+      font-size: 12px;
     }
 
     .btn[disabled],
@@ -408,6 +420,7 @@
       color: #fff;
     }
 
+    /* 弹窗样式 */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -419,13 +432,22 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      padding: 20px;
     }
 
-    .modal {
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .large-modal {
       background: var(--ant-bg-container);
       border-radius: var(--ant-radius-lg);
-      width: 416px;
+      width: 1200px;
+      max-height: 90vh;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .modal-header {
@@ -434,6 +456,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
     }
 
     .modal-title {
@@ -445,13 +468,20 @@
     .modal-close {
       background: none;
       border: none;
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
       color: var(--ant-text-secondary);
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--ant-text);
     }
 
     .modal-body {
       padding: 24px;
+      overflow-y: auto;
+      flex: 1;
     }
 
     .modal-footer {
@@ -459,7 +489,176 @@
       border-top: 1px solid var(--ant-border-subtle);
       display: flex;
       justify-content: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    /* 表单样式 */
+    .form-section {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-field-full {
+      grid-column: 1 / -1;
+    }
+
+    .sql-editor-wrapper {
+      display: flex;
       gap: 8px;
+      align-items: flex-start;
+    }
+
+    .sql-editor-wrapper textarea {
+      flex: 1;
+    }
+
+    .sql-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .query-field-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      overflow: hidden;
+    }
+
+    .query-field-table th,
+    .query-field-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .query-field-table th {
+      background: var(--ant-bg-subtle);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .query-field-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .query-field-table tbody tr {
+      cursor: grab;
+    }
+
+    .query-field-table tbody tr:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .drag-handle {
+      cursor: grab;
+      color: var(--ant-text-secondary);
+      user-select: none;
+    }
+
+    .query-field-table .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .input,
+    .query-field-table .select {
+      min-height: 28px;
+      padding: 2px 8px;
+      font-size: 13px;
+    }
+
+    .display-mode-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .display-mode-option {
+      padding: 16px;
+      border: 2px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .display-mode-option:hover {
+      border-color: var(--ant-primary);
+    }
+
+    .display-mode-option.is-active {
+      border-color: var(--ant-primary);
+      background: var(--ant-info-bg);
+    }
+
+    .display-mode-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .display-mode-label {
+      font-size: 13px;
+    }
+
+    .show-table-option {
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .chart-config,
+    .table-config {
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+    }
+
+    .config-title {
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .alert-success {
+      background: var(--ant-success-bg);
+      color: var(--ant-success);
+      border: 1px solid var(--ant-success);
+    }
+
+    .alert-error {
+      background: var(--ant-error-bg);
+      color: var(--ant-error);
+      border: 1px solid var(--ant-error);
     }
   </style>
 </head>
@@ -469,7 +668,6 @@
       <div class="sidebar-logo">📊 报表管理系统</div>
       <nav class="sidebar-menu">
         <div class="menu-item is-active">报表列表</div>
-        <a href="admin-report-edit.html" class="menu-item">新增报表</a>
         <a href="user-report-view.html" class="menu-item">用户端预览</a>
       </nav>
     </aside>
@@ -520,7 +718,7 @@
           <h2 class="toolbar-title">报表列表</h2>
           <div class="toolbar-actions">
             <button class="btn" type="button">🔄 刷新列表</button>
-            <a href="admin-report-edit.html" class="btn btn-primary">➕ 新增报表</a>
+            <button class="btn btn-primary" type="button" onclick="openCreateModal()">➕ 新增报表</button>
           </div>
         </header>
         <table class="pro-table">
@@ -549,8 +747,8 @@
                 </label>
               </td>
               <td>
-                <a class="link">编辑</a>
-                <a class="link" style="color: var(--ant-error);">删除</a>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
               </td>
             </tr>
             <tr>
@@ -566,8 +764,8 @@
                 </label>
               </td>
               <td>
-                <a class="link">编辑</a>
-                <a class="link" style="color: var(--ant-error);">删除</a>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
               </td>
             </tr>
             <tr>
@@ -583,8 +781,8 @@
                 </label>
               </td>
               <td>
-                <a class="link">编辑</a>
-                <a class="link" style="color: var(--ant-error);">删除</a>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
               </td>
             </tr>
           </tbody>
@@ -601,21 +799,312 @@
     </section>
   </main>
 
-  <!-- 删除确认弹窗示例 -->
-  <div class="modal-overlay" style="display: none;">
-    <div class="modal">
+  <!-- 新建/编辑报表弹窗 -->
+  <div class="modal-overlay hidden" id="reportModal">
+    <div class="large-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">新增报表</h3>
+        <button class="modal-close" onclick="closeReportModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-section">
+          <div class="section-title">1️⃣ 基础信息配置</div>
+          <div class="form-row">
+            <label class="form-field">
+              <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
+              <input class="input" type="text" placeholder="请输入报表名称">
+            </label>
+            <div></div>
+          </div>
+          <div class="form-row">
+            <label class="form-field form-field-full">
+              <span>报表描述</span>
+              <textarea class="textarea" placeholder="请输入报表描述，仅后台可见"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">2️⃣ SQL数据源配置</div>
+          <div class="form-row">
+            <label class="form-field form-field-full">
+              <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
+              <div class="sql-editor-wrapper">
+                <textarea class="textarea" style="min-height: 150px;" placeholder="SELECT date, amount, type FROM sales_table WHERE date BETWEEN :start_date AND :end_date"></textarea>
+                <div class="sql-actions">
+                  <button class="btn btn-success btn-sm" type="button">测试SQL</button>
+                  <button class="btn btn-sm" type="button">清空</button>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="alert alert-success" style="display: none;">
+            ✓ 数据源连接成功，查询到 156 条数据
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">3️⃣ 查询字段配置</div>
+          <div class="card-toolbar" style="margin-bottom: 12px;">
+            <span></span>
+            <button class="btn btn-primary btn-sm" type="button">➕ 新增查询字段</button>
+          </div>
+          <table class="query-field-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;"></th>
+                <th>字段中文名</th>
+                <th>数据库字段名</th>
+                <th>组件类型</th>
+                <th>是否必填</th>
+                <th>默认值</th>
+                <th>占位提示</th>
+                <th style="width: 100px;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="创建时间" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="create_date" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>下拉选择框</option>
+                    <option>输入框</option>
+                    <option>日期选择器</option>
+                    <option selected>日期范围选择器</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option>否</option>
+                    <option selected>是</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td><input class="input" type="text" placeholder="请选择日期"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="订单状态" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="status" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option selected>下拉选择框</option>
+                    <option>输入框</option>
+                    <option>日期选择器</option>
+                    <option>日期范围选择器</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option selected>否</option>
+                    <option>是</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td><input class="input" type="text" placeholder="请选择状态"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">4️⃣ 报表展示样式配置</div>
+          <div class="display-mode-options">
+            <div class="display-mode-option" onclick="selectDisplayMode('table')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">表格</div>
+            </div>
+            <div class="display-mode-option is-active" onclick="selectDisplayMode('bar')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">柱状图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('horizontalBar')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">条形图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('line')">
+              <div class="display-mode-icon">📈</div>
+              <div class="display-mode-label">折线图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('pie')">
+              <div class="display-mode-icon">🥧</div>
+              <div class="display-mode-label">饼图</div>
+            </div>
+          </div>
+
+          <div class="show-table-option" id="showTableOption">
+            <label class="switch-wrapper" style="display: flex; align-items: center; gap: 8px;">
+              <label class="switch">
+                <input type="checkbox" id="showTableCheckbox">
+                <span class="switch-slider"></span>
+              </label>
+              <span>在图形下方展示表格</span>
+            </label>
+          </div>
+
+          <div class="chart-config" id="chartConfig">
+            <div class="config-title">图表配置</div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>X轴字段</span>
+                <select class="select">
+                  <option>date</option>
+                  <option>type</option>
+                  <option>status</option>
+                </select>
+              </label>
+              <label class="form-field">
+                <span>Y轴字段</span>
+                <select class="select">
+                  <option>amount</option>
+                  <option>count</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>图表标题</span>
+                <input class="input" type="text" placeholder="请输入图表标题">
+              </label>
+              <label class="form-field">
+                <span>数据排序</span>
+                <select class="select">
+                  <option>正序</option>
+                  <option>倒序</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="table-config">
+            <div class="config-title">表格配置</div>
+            <div class="form-row">
+              <label class="form-field form-field-full">
+                <span>表格字段展示</span>
+                <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 12px; background: var(--ant-bg-container); border-radius: var(--ant-radius);">
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>日期 (date)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>金额 (amount)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>类型 (type)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox">
+                    <span>状态 (status)</span>
+                  </label>
+                </div>
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>表格功能</span>
+                <div style="display: flex; gap: 24px;">
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>分页</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>数据居中对齐</span>
+                  </label>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeReportModal()">取消</button>
+        <button class="btn" type="button">保存并继续新增</button>
+        <button class="btn btn-primary" type="button">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div class="modal-overlay hidden" id="deleteModal">
+    <div class="large-modal" style="width: 416px;">
       <div class="modal-header">
         <h3 class="modal-title">确认删除</h3>
-        <button class="modal-close">×</button>
+        <button class="modal-close" onclick="closeDeleteModal()">×</button>
       </div>
       <div class="modal-body">
         <p>确定要删除该报表吗？此操作不可恢复。</p>
       </div>
       <div class="modal-footer">
-        <button class="btn">取消</button>
+        <button class="btn" onclick="closeDeleteModal()">取消</button>
         <button class="btn btn-danger">确认删除</button>
       </div>
     </div>
   </div>
+
+  <script>
+    function openCreateModal() {
+      document.getElementById('modalTitle').textContent = '新增报表';
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function openEditModal() {
+      document.getElementById('modalTitle').textContent = '编辑报表';
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+    }
+
+    function openDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    function selectDisplayMode(mode) {
+      document.querySelectorAll('.display-mode-option').forEach(el => {
+        el.classList.remove('is-active');
+      });
+      event.currentTarget.classList.add('is-active');
+      
+      const showTableOption = document.getElementById('showTableOption');
+      const chartConfig = document.getElementById('chartConfig');
+      
+      if (mode === 'table') {
+        showTableOption.style.display = 'none';
+        chartConfig.style.display = 'none';
+      } else {
+        showTableOption.style.display = 'block';
+        chartConfig.style.display = 'block';
+      }
+    }
+
+    // 点击遮罩关闭弹窗
+    document.getElementById('reportModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeReportModal();
+      }
+    });
+
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeDeleteModal();
+      }
+    });
+  </script>
 </body>
 </html>
