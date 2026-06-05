@@ -59,8 +59,8 @@
     }
 
     .sidebar {
-      background: #f0f2f5;
-      color: #333;
+      background: #000;
+      color: #fff;
       padding: 16px 0;
     }
 
@@ -94,11 +94,11 @@
     }
 
     .menu-item:hover {
-      background: #e6f7ff;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .menu-item.is-active {
-      background: #e6f7ff;
+      background: rgba(255, 255, 255, 0.15);
       color: #1890ff;
     }
 
@@ -437,86 +437,83 @@
       <section class="data-card">
         <!-- 图表区域 -->
         <div class="chart-container">
-          <svg width="100%" height="100%" viewBox="0 0 800 380" style="padding: 20px;">
-            <!-- 标题 -->
-            <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="600" fill="#262626">工单趋势图</text>
-            
+          <svg width="100%" height="100%" viewBox="0 0 800 330" style="padding: 20px;">
             <!-- 坐标轴 -->
-            <line x1="80" y1="320" x2="720" y2="320" stroke="#d9d9d9" stroke-width="1"/>
-            <line x1="80" y1="60" x2="80" y2="320" stroke="#d9d9d9" stroke-width="1"/>
+            <line x1="80" y1="300" x2="720" y2="300" stroke="#d9d9d9" stroke-width="1"/>
+            <line x1="80" y1="40" x2="80" y2="300" stroke="#d9d9d9" stroke-width="1"/>
             
             <!-- Y轴刻度 -->
-            <text x="70" y="80" text-anchor="end" font-size="12" fill="#8c8c8c">200</text>
-            <line x1="75" y1="80" x2="80" y2="80" stroke="#d9d9d9" stroke-width="1"/>
+            <text x="70" y="60" text-anchor="end" font-size="12" fill="#8c8c8c">200</text>
+            <line x1="75" y1="60" x2="80" y2="60" stroke="#d9d9d9" stroke-width="1"/>
             
-            <text x="70" y="140" text-anchor="end" font-size="12" fill="#8c8c8c">150</text>
-            <line x1="75" y1="140" x2="80" y2="140" stroke="#d9d9d9" stroke-width="1"/>
+            <text x="70" y="120" text-anchor="end" font-size="12" fill="#8c8c8c">150</text>
+            <line x1="75" y1="120" x2="80" y2="120" stroke="#d9d9d9" stroke-width="1"/>
             
-            <text x="70" y="200" text-anchor="end" font-size="12" fill="#8c8c8c">100</text>
-            <line x1="75" y1="200" x2="80" y2="200" stroke="#d9d9d9" stroke-width="1"/>
+            <text x="70" y="180" text-anchor="end" font-size="12" fill="#8c8c8c">100</text>
+            <line x1="75" y1="180" x2="80" y2="180" stroke="#d9d9d9" stroke-width="1"/>
             
-            <text x="70" y="260" text-anchor="end" font-size="12" fill="#8c8c8c">50</text>
-            <line x1="75" y1="260" x2="80" y2="260" stroke="#d9d9d9" stroke-width="1"/>
+            <text x="70" y="240" text-anchor="end" font-size="12" fill="#8c8c8c">50</text>
+            <line x1="75" y1="240" x2="80" y2="240" stroke="#d9d9d9" stroke-width="1"/>
             
-            <text x="70" y="320" text-anchor="end" font-size="12" fill="#8c8c8c">0</text>
+            <text x="70" y="300" text-anchor="end" font-size="12" fill="#8c8c8c">0</text>
             
             <!-- 网格线 -->
-            <line x1="80" y1="80" x2="720" y2="80" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-            <line x1="80" y1="140" x2="720" y2="140" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-            <line x1="80" y1="200" x2="720" y2="200" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-            <line x1="80" y1="260" x2="720" y2="260" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="80" y1="60" x2="720" y2="60" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="80" y1="120" x2="720" y2="120" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="80" y1="180" x2="720" y2="180" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="80" y1="240" x2="720" y2="240" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
             
             <!-- 数据：2024-01-01 -->
             <!-- 新建工单量 (125) -->
-            <rect x="120" y="226.25" width="40" height="93.75" fill="#1677ff" rx="4"/>
-            <text x="140" y="220" text-anchor="middle" font-size="12" fill="#262626">125</text>
+            <rect x="120" y="206.25" width="40" height="93.75" fill="#1677ff" rx="4"/>
+            <text x="140" y="200" text-anchor="middle" font-size="12" fill="#262626">125</text>
             <!-- 完成工单量 (118) -->
-            <rect x="170" y="230.6" width="40" height="89.4" fill="#52c41a" rx="4"/>
-            <text x="190" y="224.35" text-anchor="middle" font-size="12" fill="#262626">118</text>
-            <text x="155" y="340" text-anchor="middle" font-size="12" fill="#8c8c8c">01-01</text>
+            <rect x="170" y="210.6" width="40" height="89.4" fill="#52c41a" rx="4"/>
+            <text x="190" y="204.35" text-anchor="middle" font-size="12" fill="#262626">118</text>
+            <text x="155" y="320" text-anchor="middle" font-size="12" fill="#8c8c8c">01-01</text>
             
             <!-- 数据：2024-01-02 -->
             <!-- 新建工单量 (89) -->
-            <rect x="240" y="248.85" width="40" height="71.15" fill="#1677ff" rx="4"/>
-            <text x="260" y="242.6" text-anchor="middle" font-size="12" fill="#262626">89</text>
+            <rect x="240" y="228.85" width="40" height="71.15" fill="#1677ff" rx="4"/>
+            <text x="260" y="222.6" text-anchor="middle" font-size="12" fill="#262626">89</text>
             <!-- 完成工单量 (86) -->
-            <rect x="290" y="250.7" width="40" height="69.3" fill="#52c41a" rx="4"/>
-            <text x="310" y="244.45" text-anchor="middle" font-size="12" fill="#262626">86</text>
-            <text x="275" y="340" text-anchor="middle" font-size="12" fill="#8c8c8c">01-02</text>
+            <rect x="290" y="230.7" width="40" height="69.3" fill="#52c41a" rx="4"/>
+            <text x="310" y="224.45" text-anchor="middle" font-size="12" fill="#262626">86</text>
+            <text x="275" y="320" text-anchor="middle" font-size="12" fill="#8c8c8c">01-02</text>
             
             <!-- 数据：2024-01-03 -->
             <!-- 新建工单量 (152) -->
-            <rect x="360" y="209.6" width="40" height="110.4" fill="#1677ff" rx="4"/>
-            <text x="380" y="203.35" text-anchor="middle" font-size="12" fill="#262626">152</text>
+            <rect x="360" y="189.6" width="40" height="110.4" fill="#1677ff" rx="4"/>
+            <text x="380" y="183.35" text-anchor="middle" font-size="12" fill="#262626">152</text>
             <!-- 完成工单量 (148) -->
-            <rect x="410" y="212.08" width="40" height="107.92" fill="#52c41a" rx="4"/>
-            <text x="430" y="205.83" text-anchor="middle" font-size="12" fill="#262626">148</text>
-            <text x="395" y="340" text-anchor="middle" font-size="12" fill="#8c8c8c">01-03</text>
+            <rect x="410" y="192.08" width="40" height="107.92" fill="#52c41a" rx="4"/>
+            <text x="430" y="185.83" text-anchor="middle" font-size="12" fill="#262626">148</text>
+            <text x="395" y="320" text-anchor="middle" font-size="12" fill="#8c8c8c">01-03</text>
             
             <!-- 数据：2024-01-04 -->
             <!-- 新建工单量 (78) -->
-            <rect x="480" y="255.68" width="40" height="64.32" fill="#1677ff" rx="4"/>
-            <text x="500" y="249.43" text-anchor="middle" font-size="12" fill="#262626">78</text>
+            <rect x="480" y="235.68" width="40" height="64.32" fill="#1677ff" rx="4"/>
+            <text x="500" y="229.43" text-anchor="middle" font-size="12" fill="#262626">78</text>
             <!-- 完成工单量 (75) -->
-            <rect x="530" y="257.53" width="40" height="62.47" fill="#52c41a" rx="4"/>
-            <text x="550" y="251.28" text-anchor="middle" font-size="12" fill="#262626">75</text>
-            <text x="515" y="340" text-anchor="middle" font-size="12" fill="#8c8c8c">01-04</text>
+            <rect x="530" y="237.53" width="40" height="62.47" fill="#52c41a" rx="4"/>
+            <text x="550" y="231.28" text-anchor="middle" font-size="12" fill="#262626">75</text>
+            <text x="515" y="320" text-anchor="middle" font-size="12" fill="#8c8c8c">01-04</text>
             
             <!-- 数据：2024-01-05 -->
             <!-- 新建工单量 (198) -->
-            <rect x="600" y="181.12" width="40" height="138.88" fill="#1677ff" rx="4"/>
-            <text x="620" y="174.87" text-anchor="middle" font-size="12" fill="#262626">198</text>
+            <rect x="600" y="161.12" width="40" height="138.88" fill="#1677ff" rx="4"/>
+            <text x="620" y="154.87" text-anchor="middle" font-size="12" fill="#262626">198</text>
             <!-- 完成工单量 (192) -->
-            <rect x="650" y="184.83" width="40" height="135.17" fill="#52c41a" rx="4"/>
-            <text x="670" y="178.58" text-anchor="middle" font-size="12" fill="#262626">192</text>
-            <text x="635" y="340" text-anchor="middle" font-size="12" fill="#8c8c8c">01-05</text>
+            <rect x="650" y="164.83" width="40" height="135.17" fill="#52c41a" rx="4"/>
+            <text x="670" y="158.58" text-anchor="middle" font-size="12" fill="#262626">192</text>
+            <text x="635" y="320" text-anchor="middle" font-size="12" fill="#8c8c8c">01-05</text>
             
             <!-- 图例 -->
-            <rect x="350" y="360" width="16" height="16" fill="#1677ff" rx="2"/>
-            <text x="372" y="373" font-size="12" fill="#262626">新建工单量</text>
+            <rect x="350" y="320" width="16" height="16" fill="#1677ff" rx="2"/>
+            <text x="372" y="333" font-size="12" fill="#262626">新建工单量</text>
             
-            <rect x="460" y="360" width="16" height="16" fill="#52c41a" rx="2"/>
-            <text x="482" y="373" font-size="12" fill="#262626">完成工单量</text>
+            <rect x="460" y="320" width="16" height="16" fill="#52c41a" rx="2"/>
+            <text x="482" y="333" font-size="12" fill="#262626">完成工单量</text>
           </svg>
         </div>
 
