@@ -59,8 +59,8 @@
     }
 
     .sidebar {
-      background: #001529;
-      color: rgba(255, 255, 255, 0.85);
+      background: #f0f2f5;
+      color: #333;
       padding: 16px 0;
     }
 
@@ -91,10 +91,6 @@
       justify-content: space-between;
     }
 
-    .menu-icon {
-      margin-right: 8px;
-    }
-
     .menu-arrow {
       transition: transform 0.2s;
       font-size: 10px;
@@ -105,12 +101,12 @@
     }
 
     .menu-item:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: #e6f7ff;
     }
 
     .menu-item.is-active {
-      background: var(--ant-primary);
-      color: #fff;
+      background: #e6f7ff;
+      color: #1890ff;
     }
 
     .submenu {
@@ -674,13 +670,11 @@
       <nav class="sidebar-menu">
         <div class="menu-item menu-parent">
           <div class="menu-item-content">
-            <span class="menu-icon">📋</span>
             <span>系统管理</span>
             <span class="menu-arrow">▼</span>
           </div>
           <div class="submenu">
             <div class="menu-item is-active">
-              <span class="menu-icon">📊</span>
               <span>数据报表</span>
             </div>
           </div>
