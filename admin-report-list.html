@@ -818,8 +818,7 @@
                 <th>字段名称</th>
                 <th>字段变量名</th>
                 <th>组件类型</th>
-                <th>枚举值</th>
-                <th>默认值</th>
+                <th>选项/默认值</th>
                 <th>占位提示</th>
                 <th style="width: 100px;">操作</th>
               </tr>
@@ -835,10 +834,23 @@
                     <option>输入框</option>
                     <option>日期选择器</option>
                     <option selected>日期范围选择器</option>
+                    <option>月份选择器</option>
+                    <option>年份选择器</option>
                   </select>
                 </td>
-                <td><input class="input" type="text" placeholder="请输入" disabled style="background: var(--ant-bg-layout);"></td>
-                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>今天</option>
+                    <option>昨天</option>
+                    <option>本周</option>
+                    <option>上周</option>
+                    <option>本月</option>
+                    <option>上月</option>
+                    <option>今年</option>
+                    <option>最近7天</option>
+                    <option>最近30天</option>
+                  </select>
+                </td>
                 <td><input class="input" type="text" placeholder="请输入"></td>
                 <td>
                   <button class="btn btn-danger btn-sm" type="button">删除</button>
@@ -854,10 +866,11 @@
                     <option>输入框</option>
                     <option>日期选择器</option>
                     <option>日期范围选择器</option>
+                    <option>月份选择器</option>
+                    <option>年份选择器</option>
                   </select>
                 </td>
                 <td><input class="input" type="text" value="select id,label" placeholder="请输入"></td>
-                <td><input class="input" type="text" placeholder="请输入"></td>
                 <td><input class="input" type="text" placeholder="请选择状态"></td>
                 <td>
                   <button class="btn btn-danger btn-sm" type="button">删除</button>
