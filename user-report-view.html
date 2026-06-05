@@ -55,21 +55,13 @@
     .app-shell {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 224px minmax(0, 1fr);
+      grid-template-columns: 156px minmax(0, 1fr);
     }
 
     .sidebar {
-      background: #001529;
-      color: rgba(255, 255, 255, 0.85);
+      background: #f0f2f5;
+      color: #333;
       padding: 16px 0;
-    }
-
-    .sidebar-logo {
-      padding: 16px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .sidebar-menu {
@@ -82,15 +74,32 @@
       transition: background 0.2s;
       text-decoration: none;
       color: inherit;
+      display: block;
+    }
+
+    .menu-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .menu-arrow {
+      transition: transform 0.2s;
+      font-size: 10px;
+    }
+
+    .menu-parent.open .menu-arrow {
+      transform: rotate(180deg);
     }
 
     .menu-item:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: #e6f7ff;
     }
 
     .menu-item.is-active {
-      background: var(--ant-primary);
-      color: #fff;
+      background: #e6f7ff;
+      color: #1890ff;
     }
 
     .workspace {
@@ -383,10 +392,8 @@
 <body>
   <main class="app-shell">
     <aside class="sidebar">
-      <div class="sidebar-logo">📊 报表管理系统</div>
       <nav class="sidebar-menu">
-        <a href="admin-report-list.html" class="menu-item">管理端</a>
-        <div class="menu-item is-active">报表展示</div>
+        <div class="menu-item is-active">工单趋势</div>
       </nav>
     </aside>
     <section class="workspace">
@@ -403,20 +410,6 @@
           </div>
         </div>
       </header>
-
-      <section class="page-header">
-        <h1 class="page-title">销售日报表</h1>
-        <p class="page-desc">每日销售数据统计分析</p>
-      </section>
-
-      <!-- 报表选择器 -->
-      <section class="data-card" style="padding: 16px 24px;">
-        <div class="report-tabs">
-          <div class="report-tab is-active">销售日报表</div>
-          <div class="report-tab">订单统计报表</div>
-          <div class="report-tab" style="color: var(--ant-text-disabled); cursor: not-allowed;">用户增长报表 (已禁用)</div>
-        </div>
-      </section>
 
       <!-- 查询筛选区域 -->
       <section class="filter-panel">
