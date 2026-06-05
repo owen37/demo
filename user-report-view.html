@@ -53,21 +53,35 @@
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-      display: none;
+      display: none !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     input[type="date"]::-webkit-inner-spin-button,
     input[type="date"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      display: none !important;
     }
     input[type="date"]::-moz-calendar-picker-indicator {
-      display: none;
+      display: none !important;
     }
     input[type="date"]::-ms-clear {
-      display: none;
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
     }
     input[type="date"]::-ms-expand {
-      display: none;
+      display: none !important;
+    }
+    input[type="date"]::-webkit-datetime-edit {
+      padding: 0 !important;
+    }
+    input[type="date"]::-webkit-clear-button {
+      display: none !important;
     }
 
     .app-shell {
@@ -209,8 +223,9 @@
     }
 
     .form-field {
-      display: grid;
-      gap: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       color: var(--ant-text);
       min-width: 200px;
     }
@@ -428,11 +443,11 @@
       <section class="filter-panel">
         <div class="filter-row">
           <label class="form-field">
-            <span>创建时间 <span style="color: var(--ant-error);">*</span></span>
+            <span>创建时间</span>
             <div style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--ant-border); border-radius: var(--ant-radius); padding: 4px 8px; background: var(--ant-bg-container);">
-              <input class="input" type="date" value="2024-01-01" style="border: none; padding: 0; min-height: auto; -webkit-appearance: none; appearance: none; background: transparent;">
+              <input class="input" type="date" value="2024-01-01" style="border: none; padding: 0; min-height: auto; background: transparent;">
               <span style="color: var(--ant-text-secondary);">至</span>
-              <input class="input" type="date" value="2024-01-31" style="border: none; padding: 0; min-height: auto; -webkit-appearance: none; appearance: none; background: transparent;">
+              <input class="input" type="date" value="2024-01-31" style="border: none; padding: 0; min-height: auto; background: transparent;">
             </div>
           </label>
           <label class="form-field">
