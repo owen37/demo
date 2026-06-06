@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>报表管理系统</title>
+  <style>
+    :root {
+      --ant-primary: #1677ff;
+      --ant-primary-hover: #4096ff;
+      --ant-primary-active: #0958d9;
+      --ant-success: #52c41a;
+      --ant-warning: #faad14;
+      --ant-error: #ff4d4f;
+      --ant-info-bg: #e6f4ff;
+      --ant-success-bg: #f6ffed;
+      --ant-warning-bg: #fffbe6;
+      --ant-error-bg: #fff2f0;
+      --ant-bg-layout: #f5f5f5;
+      --ant-bg-container: #ffffff;
+      --ant-bg-elevated: #ffffff;
+      --ant-bg-subtle: #fafafa;
+      --ant-border: #d9d9d9;
+      --ant-border-subtle: #f0f0f0;
+      --ant-text: #262626;
+      --ant-text-secondary: #8c8c8c;
+      --ant-text-disabled: #bfbfbf;
+      --ant-radius: 6px;
+      --ant-radius-lg: 8px;
+      --ant-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --ant-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --ant-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--ant-text);
+      font-family: var(--ant-font);
+      font-size: 14px;
+      line-height: 1.5715;
+      min-width: 1400px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-lg);
+      padding: 48px;
+      margin-bottom: 24px;
+    }
+
+    .hero-icon {
+      font-size: 72px;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      margin: 0 0 12px 0;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--ant-text);
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      font-size: 16px;
+      color: var(--ant-text-secondary);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .entry-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-lg);
+      padding: 32px 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: block;
+    }
+
+    .entry-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .entry-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .entry-title {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .entry-desc {
+      margin: 0;
+      color: var(--ant-text-secondary);
+      font-size: 14px;
+    }
+
+    .admin-card {
+      border-top: 4px solid var(--ant-primary);
+    }
+
+    .user-card {
+      border-top: 4px solid var(--ant-success);
+    }
+
+    .btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 24px;
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      background: var(--ant-bg-container);
+      color: var(--ant-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      font-size: 16px;
+      margin-top: 24px;
+    }
+
+    .btn:hover {
+      color: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+    }
+
+    .btn-primary {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+      color: #fff;
+    }
+
+    .btn-success {
+      background: var(--ant-success);
+      border-color: var(--ant-success);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #73d13d;
+      border-color: #73d13d;
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .hero-card {
+        padding: 32px 24px;
+      }
+
+      .hero-icon {
+        font-size: 56px;
+      }
+
+      .hero-title {
+        font-size: 24px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero-card">
+      <div class="hero-icon">📊</div>
+      <h1 class="hero-title">报表管理系统</h1>
+      <p class="hero-subtitle">专业的报表创建、配置与数据可视化平台</p>
+    </div>
+
+    <div class="card-grid">
+      <a href="admin-report-list.html" class="entry-card admin-card">
+        <div class="entry-icon">⚙️</div>
+        <h2 class="entry-title">管理端</h2>
+        <p class="entry-desc">创建、编辑、管理报表配置与数据源</p>
+        <div class="btn btn-primary">进入管理端</div>
+      </a>
+
+      <a href="user-report-view.html" class="entry-card user-card">
+        <div class="entry-icon">👁️</div>
+        <h2 class="entry-title">用户端</h2>
+        <p class="entry-desc">查看、查询与可视化报表数据</p>
+        <div class="btn btn-success">进入用户端</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

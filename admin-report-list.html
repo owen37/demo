@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>报表列表 - 报表管理系统</title>
+  <style>
+    :root {
+      --ant-primary: #1677ff;
+      --ant-primary-hover: #4096ff;
+      --ant-primary-active: #0958d9;
+      --ant-success: #52c41a;
+      --ant-warning: #faad14;
+      --ant-error: #ff4d4f;
+      --ant-info-bg: #e6f4ff;
+      --ant-success-bg: #f6ffed;
+      --ant-warning-bg: #fffbe6;
+      --ant-error-bg: #fff2f0;
+      --ant-bg-layout: #f5f5f5;
+      --ant-bg-container: #ffffff;
+      --ant-bg-elevated: #ffffff;
+      --ant-bg-subtle: #fafafa;
+      --ant-border: #d9d9d9;
+      --ant-border-subtle: #f0f0f0;
+      --ant-text: #262626;
+      --ant-text-secondary: #8c8c8c;
+      --ant-text-disabled: #bfbfbf;
+      --ant-radius: 6px;
+      --ant-radius-lg: 8px;
+      --ant-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --ant-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ant-bg-layout);
+      color: var(--ant-text);
+      font-family: var(--ant-font);
+      font-size: 14px;
+      line-height: 1.5715;
+      min-width: 1400px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-outer-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      display: none !important;
+    }
+    input[type="date"]::-moz-calendar-picker-indicator {
+      display: none !important;
+    }
+    input[type="date"]::-ms-clear {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    input[type="date"]::-ms-expand {
+      display: none !important;
+    }
+    input[type="date"]::-webkit-datetime-edit {
+      padding: 0 !important;
+    }
+    input[type="date"]::-webkit-clear-button {
+      display: none !important;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 156px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #f0f2f5;
+      color: #333;
+      padding: 16px 0;
+    }
+
+    .sidebar-logo {
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-menu {
+      padding: 8px 0;
+    }
+
+    .menu-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .menu-item:hover {
+      background: #e6f7ff;
+    }
+
+    .menu-item.is-active {
+      background: #d9d9d9;
+      color: #1890ff;
+    }
+
+    .workspace {
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      background: var(--ant-bg-container);
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      color: var(--ant-text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--ant-text-secondary);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--ant-primary);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-header,
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card,
+    .metric-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-card);
+    }
+
+    .page-header {
+      margin: 24px 24px 16px;
+      padding: 20px 24px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .page-desc {
+      margin: 8px 0 0;
+      color: var(--ant-text-secondary);
+    }
+
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card {
+      margin: 16px 24px;
+      padding: 24px;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .form-field {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ant-text);
+    }
+    .form-field span {
+      white-space: nowrap;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      min-height: 32px;
+      padding: 4px 11px;
+      color: var(--ant-text);
+      background: var(--ant-bg-container);
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .textarea {
+      min-height: 88px;
+      resize: vertical;
+      font-family: 'Courier New', monospace;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: var(--ant-text-disabled);
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: var(--ant-primary);
+      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12);
+    }
+
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 15px;
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      background: var(--ant-bg-container);
+      color: var(--ant-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      color: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+    }
+
+    .btn-primary {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+      color: #fff;
+    }
+
+    .btn-success {
+      color: var(--ant-success);
+      border-color: var(--ant-success);
+    }
+
+    .btn-danger {
+      color: var(--ant-error);
+      border-color: var(--ant-error);
+    }
+
+    .btn-sm {
+      min-height: 28px;
+      padding: 2px 12px;
+      font-size: 12px;
+    }
+
+    .btn[disabled],
+    .input[disabled],
+    .select[disabled] {
+      color: var(--ant-text-disabled);
+      background: var(--ant-bg-layout);
+      border-color: var(--ant-border);
+      cursor: not-allowed;
+    }
+
+    .link {
+      color: var(--ant-primary);
+      text-decoration: none;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+
+    .link:hover {
+      color: var(--ant-primary-hover);
+    }
+
+    .card-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pro-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--ant-bg-container);
+    }
+
+    .pro-table th,
+    .pro-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .pro-table th {
+      background: var(--ant-bg-subtle);
+      color: var(--ant-text);
+      font-weight: 600;
+    }
+
+    .pro-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 22px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--ant-primary);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(22px);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .pagination .btn {
+      min-width: 32px;
+      padding: 4px 8px;
+    }
+
+    .pagination .btn.is-active {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    /* 弹窗样式 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .large-modal {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      width: 1200px;
+      max-height: 90vh;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--ant-text-secondary);
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--ant-text);
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ant-border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    /* 表单样式 */
+    .form-section {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-field-full {
+      grid-column: 1 / -1;
+    }
+
+    .sql-editor-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .sql-editor-wrapper textarea {
+      flex: 1;
+    }
+
+    .sql-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .query-field-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      overflow: hidden;
+    }
+
+    .query-field-table th,
+    .query-field-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .query-field-table th {
+      background: var(--ant-bg-subtle);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .query-field-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .query-field-table tbody tr {
+      cursor: grab;
+    }
+
+    .query-field-table tbody tr:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .drag-handle {
+      cursor: grab;
+      color: var(--ant-text-secondary);
+      user-select: none;
+    }
+
+    .query-field-table .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .input,
+    .query-field-table .select {
+      min-height: 28px;
+      padding: 2px 8px;
+      font-size: 13px;
+      width: 100%;
+    }
+
+    .display-mode-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .display-mode-option {
+      padding: 20px;
+      border: 2px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .display-mode-option:hover {
+      border-color: var(--ant-primary);
+    }
+
+    .display-mode-option.is-active {
+      border-color: var(--ant-primary);
+      background: var(--ant-info-bg);
+    }
+
+    .display-mode-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .display-mode-label {
+      font-size: 14px;
+    }
+
+    .show-table-option {
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .alert-success {
+      background: var(--ant-success-bg);
+      color: var(--ant-success);
+      border: 1px solid var(--ant-success);
+    }
+
+    .alert-error {
+      background: var(--ant-error-bg);
+      color: var(--ant-error);
+      border: 1px solid var(--ant-error);
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <nav class="sidebar-menu">
+        <div class="menu-item is-active">数据报表</div>
+      </nav>
+    </aside>
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumb">
+            <a href="index.html">首页</a> / 系统管理 / 数据报表
+          </div>
+        </div>
+        <div class="topbar-right"></div>
+      </header>
+
+      <section class="filter-panel">
+        <form class="filter-row">
+          <label class="form-field">
+            <span>报表名称</span>
+            <input class="input" type="text" placeholder="请输入报表名称">
+          </label>
+          <label class="form-field">
+            <span>报表描述</span>
+            <input class="input" type="text" placeholder="请输入报表描述">
+          </label>
+          <label class="form-field">
+            <span>报表状态</span>
+            <select class="select">
+              <option value="">全部</option>
+              <option value="enabled">启用</option>
+              <option value="disabled">禁用</option>
+            </select>
+          </label>
+          <div class="filter-actions">
+            <button class="btn" type="button">重置</button>
+            <button class="btn btn-primary" type="button">查询</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="data-card">
+        <header class="card-toolbar" style="justify-content: flex-start;">
+          <button class="btn btn-primary" type="button" onclick="openCreateModal()">+ 新增报表</button>
+        </header>
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>报表名称</th>
+              <th>报表描述</th>
+              <th>创建人</th>
+              <th>创建时间</th>
+              <th>更新时间</th>
+              <th>报表状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>销售日报表</td>
+              <td>每日销售数据统计分析</td>
+              <td>张三</td>
+              <td>2024-01-15 09:30:00</td>
+              <td>2024-01-20 14:20:00</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
+              <td>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>订单统计报表</td>
+              <td>各类型订单数据汇总</td>
+              <td>李四</td>
+              <td>2024-01-10 16:45:00</td>
+              <td>2024-01-18 11:10:00</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
+              <td>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>用户增长报表</td>
+              <td>新增用户数据趋势分析</td>
+              <td>王五</td>
+              <td>2024-01-05 10:20:00</td>
+              <td>2024-01-12 09:00:00</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="switch-slider"></span>
+                </label>
+              </td>
+              <td>
+                <a class="link" onclick="openEditModal()">编辑</a>
+                <a class="link" style="color: var(--ant-error);" onclick="openDeleteModal()">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span style="color: var(--ant-text-secondary); margin-right: 16px;">共 23 条记录</span>
+          <button class="btn">&lt;</button>
+          <button class="btn is-active">1</button>
+          <button class="btn">2</button>
+          <button class="btn">3</button>
+          <button class="btn">&gt;</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- 新建/编辑报表弹窗 -->
+  <div class="modal-overlay hidden" id="reportModal">
+    <div class="large-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">新增报表</h3>
+        <button class="modal-close" onclick="closeReportModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-section" style="margin-bottom: 0; padding-bottom: 0;">
+          <div class="form-row">
+            <label class="form-field">
+              <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
+              <input class="input" type="text" placeholder="请输入报表名称">
+            </label>
+            <label class="form-field">
+              <span>报表描述</span>
+              <input class="input" type="text" placeholder="请输入报表描述，仅后台可见">
+            </label>
+          </div>
+          <div class="form-row">
+            <label class="form-field">
+              <span>展示样式 <span style="color: var(--ant-error);">*</span></span>
+              <select class="select" id="displayModeSelect">
+                <option value="table">表格</option>
+                <option value="bar">柱状图</option>
+                <option value="horizontalBar">条形图</option>
+                <option value="line">折线图</option>
+                <option value="pie">饼图</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>数据库 <span style="color: var(--ant-error);">*</span></span>
+              <select class="select">
+                <option value="user">user</option>
+                <option value="workfrom">workfrom</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section" style="padding-top: 0; margin-bottom: 0; padding-bottom: 0;">
+          <div class="form-row">
+            <label class="form-field form-field-full">
+              <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
+              <textarea class="textarea" style="min-height: 150px;" placeholder="select date,type from table where tenant_id=${tenant_id}"></textarea>
+            </label>
+          </div>
+          <div class="alert alert-success" style="display: none;">
+            ✓ 数据源连接成功，查询到 156 条数据
+          </div>
+        </div>
+
+        <div class="form-section">
+          <table class="query-field-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;"></th>
+                <th>字段名称</th>
+                <th>SQL变量</th>
+                <th style="width: 130px;">组件类型</th>
+                <th>选项/默认值</th>
+                <th>占位提示</th>
+                <th style="width: 100px;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="创建时间" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="create_date" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>文本输入</option>
+                    <option>下拉选择</option>
+                    <option selected>日期范围</option>
+                    <option>月份选择</option>
+                    <option>年份选择</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option>今天</option>
+                    <option>昨天</option>
+                    <option>本周</option>
+                    <option>上周</option>
+                    <option>本月</option>
+                    <option>上月</option>
+                    <option>今年</option>
+                    <option>最近7天</option>
+                    <option>最近30天</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="订单状态" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="status" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>文本输入</option>
+                    <option selected>下拉选择</option>
+                    <option>日期范围</option>
+                    <option>月份选择</option>
+                    <option>年份选择</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" value="select id,label" placeholder="请输入"></td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="统计月份" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="stat_month" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>文本输入</option>
+                    <option>下拉选择</option>
+                    <option>日期范围</option>
+                    <option selected>月份选择</option>
+                    <option>年份选择</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option>本月</option>
+                    <option>上月</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="统计年份" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="stat_year" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>文本输入</option>
+                    <option>下拉选择</option>
+                    <option>日期范围</option>
+                    <option>月份选择</option>
+                    <option selected>年份选择</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option>今年</option>
+                    <option>去年</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="备注" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="remark" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option selected>文本输入</option>
+                    <option>下拉选择</option>
+                    <option>日期范围</option>
+                    <option>月份选择</option>
+                    <option>年份选择</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入" disabled style="background: var(--ant-bg-layout);"></td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 12px;">
+            <a href="#" style="color: var(--ant-primary); cursor: pointer; text-decoration: none;">+ 新增查询字段</a>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button">提交</button>
+        <button class="btn" onclick="closeReportModal()">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div class="modal-overlay hidden" id="deleteModal">
+    <div class="large-modal" style="width: 416px;">
+      <div class="modal-header">
+        <h3 class="modal-title">确认删除</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p>确定要删除该报表吗？此操作不可恢复。</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    function openCreateModal() {
+      document.getElementById('modalTitle').textContent = '新增报表';
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function openEditModal() {
+      document.getElementById('modalTitle').textContent = '编辑报表';
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+    }
+
+    function openDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    function selectDisplayMode(mode) {
+      // 下拉菜单模式选择逻辑（如果需要后续扩展可以在这里实现）
+      const showTableOption = document.getElementById('showTableOption');
+      if (showTableOption) {
+        if (mode === 'table') {
+          showTableOption.style.display = 'none';
+        } else {
+          showTableOption.style.display = 'block';
+        }
+      }
+    }
+
+    // 点击遮罩关闭弹窗
+    document.getElementById('reportModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeReportModal();
+      }
+    });
+
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeDeleteModal();
+      }
+    });
+  </script>
+</body>
+</html>

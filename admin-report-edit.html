@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>新增/编辑报表 - 报表管理系统</title>
+  <style>
+    :root {
+      --ant-primary: #1677ff;
+      --ant-primary-hover: #4096ff;
+      --ant-primary-active: #0958d9;
+      --ant-success: #52c41a;
+      --ant-warning: #faad14;
+      --ant-error: #ff4d4f;
+      --ant-info-bg: #e6f4ff;
+      --ant-success-bg: #f6ffed;
+      --ant-warning-bg: #fffbe6;
+      --ant-error-bg: #fff2f0;
+      --ant-bg-layout: #f5f5f5;
+      --ant-bg-container: #ffffff;
+      --ant-bg-elevated: #ffffff;
+      --ant-bg-subtle: #fafafa;
+      --ant-border: #d9d9d9;
+      --ant-border-subtle: #f0f0f0;
+      --ant-text: #262626;
+      --ant-text-secondary: #8c8c8c;
+      --ant-text-disabled: #bfbfbf;
+      --ant-radius: 6px;
+      --ant-radius-lg: 8px;
+      --ant-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --ant-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ant-bg-layout);
+      color: var(--ant-text);
+      font-family: var(--ant-font);
+      font-size: 14px;
+      line-height: 1.5715;
+      min-width: 1400px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 224px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #001529;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 16px 0;
+    }
+
+    .sidebar-logo {
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-menu {
+      padding: 8px 0;
+    }
+
+    .menu-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .menu-item.is-active {
+      background: var(--ant-primary);
+      color: #fff;
+    }
+
+    .workspace {
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      background: var(--ant-bg-container);
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      color: var(--ant-text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--ant-text-secondary);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--ant-primary);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-header,
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card,
+    .metric-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-card);
+    }
+
+    .page-header {
+      margin: 24px 24px 16px;
+      padding: 20px 24px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .page-desc {
+      margin: 8px 0 0;
+      color: var(--ant-text-secondary);
+    }
+
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card {
+      margin: 16px 24px;
+      padding: 24px;
+    }
+
+    .form-section {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 8px;
+      color: var(--ant-text);
+    }
+
+    .form-field-full {
+      grid-column: 1 / -1;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      min-height: 32px;
+      padding: 4px 11px;
+      color: var(--ant-text);
+      background: var(--ant-bg-container);
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .textarea {
+      min-height: 88px;
+      resize: vertical;
+      font-family: 'Courier New', monospace;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: var(--ant-text-disabled);
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: var(--ant-primary);
+      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12);
+    }
+
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 15px;
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      background: var(--ant-bg-container);
+      color: var(--ant-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      color: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+    }
+
+    .btn-primary {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+      color: #fff;
+    }
+
+    .btn-success {
+      color: var(--ant-success);
+      border-color: var(--ant-success);
+    }
+
+    .btn-danger {
+      color: var(--ant-error);
+      border-color: var(--ant-error);
+    }
+
+    .btn-sm {
+      min-height: 28px;
+      padding: 2px 12px;
+      font-size: 12px;
+    }
+
+    .btn[disabled],
+    .input[disabled],
+    .select[disabled] {
+      color: var(--ant-text-disabled);
+      background: var(--ant-bg-layout);
+      border-color: var(--ant-border);
+      cursor: not-allowed;
+    }
+
+    .link {
+      color: var(--ant-primary);
+      text-decoration: none;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+
+    .link:hover {
+      color: var(--ant-primary-hover);
+    }
+
+    .card-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .switch-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 22px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--ant-primary);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(22px);
+    }
+
+    .sql-editor-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .sql-editor-wrapper textarea {
+      flex: 1;
+    }
+
+    .sql-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .query-field-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      overflow: hidden;
+    }
+
+    .query-field-table th,
+    .query-field-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .query-field-table th {
+      background: var(--ant-bg-subtle);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .query-field-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .query-field-table tbody tr {
+      cursor: grab;
+    }
+
+    .query-field-table tbody tr:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .drag-handle {
+      cursor: grab;
+      color: var(--ant-text-secondary);
+      user-select: none;
+    }
+
+    .query-field-table .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .query-field-table .input,
+    .query-field-table .select {
+      min-height: 28px;
+      padding: 2px 8px;
+      font-size: 13px;
+    }
+
+    .display-mode-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .display-mode-option {
+      padding: 16px;
+      border: 2px solid var(--ant-border-subtle);
+      border-radius: var(--ant-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .display-mode-option:hover {
+      border-color: var(--ant-primary);
+    }
+
+    .display-mode-option.is-active {
+      border-color: var(--ant-primary);
+      background: var(--ant-info-bg);
+    }
+
+    .display-mode-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .display-mode-label {
+      font-size: 13px;
+    }
+
+    .show-table-option {
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .chart-config,
+    .table-config {
+      padding: 16px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+    }
+
+    .config-title {
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--ant-border-subtle);
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: var(--ant-radius);
+      margin-bottom: 16px;
+    }
+
+    .alert-success {
+      background: var(--ant-success-bg);
+      color: var(--ant-success);
+      border: 1px solid var(--ant-success);
+    }
+
+    .alert-error {
+      background: var(--ant-error-bg);
+      color: var(--ant-error);
+      border: 1px solid var(--ant-error);
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo">📊 报表管理系统</div>
+      <nav class="sidebar-menu">
+        <a href="admin-report-list.html" class="menu-item">报表列表</a>
+        <div class="menu-item is-active">新增报表</a>
+        <a href="user-report-view.html" class="menu-item">用户端预览</a>
+      </nav>
+    </aside>
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumb">
+            <a href="index.html">首页</a> / <a href="admin-report-list.html">管理端</a> / 新增报表
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="user-info">
+            <span>👤</span>
+            <span>管理员</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="page-header">
+        <h1 class="page-title">新增报表</h1>
+        <p class="page-desc">配置报表的基础信息、数据源、查询条件和展示样式</p>
+      </section>
+
+      <section class="form-card">
+        <div class="form-section">
+          <div class="section-title">1️⃣ 基础信息配置</div>
+          <div class="form-row">
+            <label class="form-field">
+              <span>报表名称 <span style="color: var(--ant-error);">*</span></span>
+              <input class="input" type="text" placeholder="请输入报表名称">
+            </label>
+            <div></div>
+          </div>
+          <div class="form-row">
+            <label class="form-field form-field-full">
+              <span>报表描述</span>
+              <textarea class="textarea" placeholder="请输入报表描述，仅后台可见"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">2️⃣ SQL数据源配置</div>
+          <div class="form-row">
+            <label class="form-field form-field-full">
+              <span>SQL语句 <span style="color: var(--ant-error);">*</span></span>
+              <div class="sql-editor-wrapper">
+                <textarea class="textarea" style="min-height: 150px;" placeholder="SELECT date, amount, type FROM sales_table WHERE date BETWEEN :start_date AND :end_date"></textarea>
+                <div class="sql-actions">
+                  <button class="btn btn-success btn-sm" type="button">测试SQL</button>
+                  <button class="btn btn-sm" type="button">清空</button>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="alert alert-success" style="display: none;">
+            ✓ 数据源连接成功，查询到 156 条数据
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">3️⃣ 查询字段配置</div>
+          <div class="card-toolbar" style="margin-bottom: 12px;">
+            <span></span>
+            <button class="btn btn-primary btn-sm" type="button">➕ 新增查询字段</button>
+          </div>
+          <table class="query-field-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;"></th>
+                <th>字段中文名</th>
+                <th>数据库字段名</th>
+                <th>组件类型</th>
+                <th>是否必填</th>
+                <th>默认值</th>
+                <th>占位提示</th>
+                <th style="width: 100px;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="创建时间" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="create_date" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option>下拉选择框</option>
+                    <option>输入框</option>
+                    <option>日期选择器</option>
+                    <option selected>日期范围选择器</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option>否</option>
+                    <option selected>是</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td><input class="input" type="text" placeholder="请选择日期"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="drag-handle">⋮⋮</span></td>
+                <td><input class="input" type="text" value="订单状态" placeholder="请输入"></td>
+                <td><input class="input" type="text" value="status" placeholder="请输入"></td>
+                <td>
+                  <select class="select">
+                    <option selected>下拉选择框</option>
+                    <option>输入框</option>
+                    <option>日期选择器</option>
+                    <option>日期范围选择器</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="select">
+                    <option selected>否</option>
+                    <option>是</option>
+                  </select>
+                </td>
+                <td><input class="input" type="text" placeholder="请输入"></td>
+                <td><input class="input" type="text" placeholder="请选择状态"></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button">删除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">4️⃣ 报表展示样式配置</div>
+          <div class="display-mode-options">
+            <div class="display-mode-option" onclick="selectDisplayMode('table')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">表格</div>
+            </div>
+            <div class="display-mode-option is-active" onclick="selectDisplayMode('bar')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">柱状图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('horizontalBar')">
+              <div class="display-mode-icon">📊</div>
+              <div class="display-mode-label">条形图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('line')">
+              <div class="display-mode-icon">📈</div>
+              <div class="display-mode-label">折线图</div>
+            </div>
+            <div class="display-mode-option" onclick="selectDisplayMode('pie')">
+              <div class="display-mode-icon">🥧</div>
+              <div class="display-mode-label">饼图</div>
+            </div>
+          </div>
+
+          <div class="show-table-option" id="showTableOption">
+            <label class="switch-wrapper">
+              <label class="switch">
+                <input type="checkbox" id="showTableCheckbox">
+                <span class="switch-slider"></span>
+              </label>
+              <span>在图形下方展示表格</span>
+            </label>
+          </div>
+
+          <div class="chart-config" id="chartConfig">
+            <div class="config-title">图表配置</div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>X轴字段</span>
+                <select class="select">
+                  <option>date</option>
+                  <option>type</option>
+                  <option>status</option>
+                </select>
+              </label>
+              <label class="form-field">
+                <span>Y轴字段</span>
+                <select class="select">
+                  <option>amount</option>
+                  <option>count</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>图表标题</span>
+                <input class="input" type="text" placeholder="请输入图表标题">
+              </label>
+              <label class="form-field">
+                <span>数据排序</span>
+                <select class="select">
+                  <option>正序</option>
+                  <option>倒序</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="table-config">
+            <div class="config-title">表格配置</div>
+            <div class="form-row">
+              <label class="form-field form-field-full">
+                <span>表格字段展示</span>
+                <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 12px; background: var(--ant-bg-container); border-radius: var(--ant-radius);">
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>日期 (date)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>金额 (amount)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>类型 (type)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox">
+                    <span>状态 (status)</span>
+                  </label>
+                </div>
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                <span>表格功能</span>
+                <div style="display: flex; gap: 24px;">
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>分页</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" checked>
+                    <span>数据居中对齐</span>
+                  </label>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <a href="admin-report-list.html" class="btn">取消</a>
+          <button class="btn" type="button">保存并继续新增</button>
+          <button class="btn btn-primary" type="button">保存</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    function selectDisplayMode(mode) {
+      document.querySelectorAll('.display-mode-option').forEach(el => {
+        el.classList.remove('is-active');
+      });
+      event.currentTarget.classList.add('is-active');
+      
+      const showTableOption = document.getElementById('showTableOption');
+      const chartConfig = document.getElementById('chartConfig');
+      
+      if (mode === 'table') {
+        showTableOption.style.display = 'none';
+        chartConfig.style.display = 'none';
+      } else {
+        showTableOption.style.display = 'block';
+        chartConfig.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

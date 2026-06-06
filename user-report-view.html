@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>报表展示 - 报表管理系统</title>
+  <style>
+    :root {
+      --ant-primary: #1677ff;
+      --ant-primary-hover: #4096ff;
+      --ant-primary-active: #0958d9;
+      --ant-success: #52c41a;
+      --ant-warning: #faad14;
+      --ant-error: #ff4d4f;
+      --ant-info-bg: #e6f4ff;
+      --ant-success-bg: #f6ffed;
+      --ant-warning-bg: #fffbe6;
+      --ant-error-bg: #fff2f0;
+      --ant-bg-layout: #f5f5f5;
+      --ant-bg-container: #ffffff;
+      --ant-bg-elevated: #ffffff;
+      --ant-bg-subtle: #fafafa;
+      --ant-border: #d9d9d9;
+      --ant-border-subtle: #f0f0f0;
+      --ant-text: #262626;
+      --ant-text-secondary: #8c8c8c;
+      --ant-text-disabled: #bfbfbf;
+      --ant-radius: 6px;
+      --ant-radius-lg: 8px;
+      --ant-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --ant-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ant-bg-layout);
+      color: var(--ant-text);
+      font-family: var(--ant-font);
+      font-size: 14px;
+      line-height: 1.5715;
+      min-width: 1400px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-outer-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      display: none !important;
+    }
+    input[type="date"]::-moz-calendar-picker-indicator {
+      display: none !important;
+    }
+    input[type="date"]::-ms-clear {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    input[type="date"]::-ms-expand {
+      display: none !important;
+    }
+    input[type="date"]::-webkit-datetime-edit {
+      padding: 0 !important;
+    }
+    input[type="date"]::-webkit-clear-button {
+      display: none !important;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 156px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #000;
+      color: #fff;
+      padding: 16px 0;
+    }
+
+    .sidebar-menu {
+      padding: 8px 0;
+    }
+
+    .menu-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .menu-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .menu-arrow {
+      transition: transform 0.2s;
+      font-size: 10px;
+    }
+
+    .menu-parent.open .menu-arrow {
+      transform: rotate(180deg);
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-item.is-active {
+      background: #1890ff;
+      color: #fff;
+    }
+
+    .workspace {
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      background: var(--ant-bg-container);
+      border-bottom: 1px solid var(--ant-border-subtle);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      color: var(--ant-text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--ant-text-secondary);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--ant-primary);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-header,
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card,
+    .metric-card {
+      background: var(--ant-bg-container);
+      border-radius: var(--ant-radius-lg);
+      box-shadow: var(--ant-shadow-card);
+    }
+
+    .page-header {
+      margin: 24px 24px 16px;
+      padding: 20px 24px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .page-desc {
+      margin: 8px 0 0;
+      color: var(--ant-text-secondary);
+    }
+
+    .filter-panel,
+    .data-card,
+    .form-card,
+    .detail-card {
+      margin: 16px 24px;
+      padding: 24px;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .form-field {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ant-text);
+      min-width: 200px;
+    }
+    .form-field span {
+      white-space: nowrap;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      min-height: 32px;
+      padding: 4px 11px;
+      color: var(--ant-text);
+      background: var(--ant-bg-container);
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: var(--ant-text-disabled);
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: var(--ant-primary);
+      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12);
+    }
+
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 15px;
+      border: 1px solid var(--ant-border);
+      border-radius: var(--ant-radius);
+      background: var(--ant-bg-container);
+      color: var(--ant-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      color: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+    }
+
+    .btn-primary {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--ant-primary-hover);
+      border-color: var(--ant-primary-hover);
+      color: #fff;
+    }
+
+    .pro-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--ant-bg-container);
+    }
+
+    .pro-table th,
+    .pro-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .pro-table th {
+      background: var(--ant-bg-subtle);
+      color: var(--ant-text);
+      font-weight: 600;
+    }
+
+    .pro-table tbody tr:hover {
+      background: var(--ant-bg-subtle);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .pagination .btn {
+      min-width: 32px;
+      padding: 4px 8px;
+    }
+
+    .pagination .btn.is-active {
+      background: var(--ant-primary);
+      border-color: var(--ant-primary);
+      color: #fff;
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      background: var(--ant-bg-subtle);
+      border-radius: var(--ant-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .chart-placeholder {
+      text-align: center;
+      color: var(--ant-text-secondary);
+    }
+
+    .chart-placeholder .icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .report-tabs {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--ant-border-subtle);
+      padding-bottom: 0;
+    }
+
+    .report-tab {
+      padding: 12px 0;
+      cursor: pointer;
+      color: var(--ant-text-secondary);
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .report-tab:hover {
+      color: var(--ant-text);
+    }
+
+    .report-tab.is-active {
+      color: var(--ant-primary);
+      border-bottom-color: var(--ant-primary);
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .form-field {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        height: auto;
+        padding-block: 16px;
+      }
+
+      .filter-panel,
+      .data-card,
+      .form-card,
+      .detail-card,
+      .page-header {
+        margin-inline: 16px;
+        padding: 16px;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <nav class="sidebar-menu">
+        <a href="user-report-view.html" class="menu-item is-active">上门工单趋势</a>
+        <a href="user-report-line.html" class="menu-item">工单量趋势</a>
+        <a href="user-report-bar.html" class="menu-item">服务类型分布</a>
+        <a href="user-report-pie.html" class="menu-item">工单状态占比</a>
+        <a href="user-report-table.html" class="menu-item">工单明细</a>
+      </nav>
+    </aside>
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumb">
+            <a href="index.html">首页</a> / 上门工单趋势
+          </div>
+        </div>
+        <div class="topbar-right"></div>
+      </header>
+
+      <!-- 查询筛选区域 -->
+      <section class="filter-panel">
+        <div class="filter-row">
+          <label class="form-field">
+            <span>创建时间</span>
+            <div style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--ant-border); border-radius: var(--ant-radius); padding: 4px 8px; background: var(--ant-bg-container);">
+              <input class="input" type="date" value="2024-01-01" style="border: none; padding: 0; min-height: auto; background: transparent;">
+              <span style="color: var(--ant-text-secondary);">至</span>
+              <input class="input" type="date" value="2024-01-31" style="border: none; padding: 0; min-height: auto; background: transparent;">
+            </div>
+          </label>
+          <label class="form-field">
+            <span>工单状态</span>
+            <select class="select">
+              <option value="">全部</option>
+              <option value="pending">待处理</option>
+              <option value="completed">已完成</option>
+              <option value="cancelled">已取消</option>
+            </select>
+          </label>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn" type="button">重置</button>
+            <button class="btn btn-primary" type="button">查询</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 报表展示区域 - 图表+表格组合模式 -->
+      <section class="data-card">
+        <!-- 图表区域 -->
+        <div class="chart-container" style="padding: 20px;">
+          <style>
+            .bar-chart {
+              position: relative;
+              width: 100%;
+              height: 100%;
+            }
+            .y-axis {
+              position: absolute;
+              left: 0;
+              top: 0;
+              bottom: 60px;
+              width: 80px;
+              border-right: 1px solid #d9d9d9;
+            }
+            .y-axis .tick {
+              position: absolute;
+              right: 8px;
+              font-size: 12px;
+              color: #8c8c8c;
+            }
+            .y-axis .grid-line {
+              position: absolute;
+              left: 80px;
+              right: 0;
+              border-top: 1px dashed #f0f0f0;
+            }
+            .x-axis {
+              position: absolute;
+              bottom: 60px;
+              left: 80px;
+              right: 0;
+              border-top: 1px solid #d9d9d9;
+            }
+            .chart-bars {
+              position: absolute;
+              left: 80px;
+              right: 0;
+              top: 0;
+              bottom: 60px;
+              display: flex;
+              justify-content: space-around;
+              padding: 0 40px;
+            }
+            .bar-group {
+              display: flex;
+              align-items: flex-end;
+              gap: 8px;
+              position: relative;
+            }
+            .bar {
+              width: 40px;
+              border-radius: 4px 4px 0 0;
+              position: relative;
+            }
+            .bar.new {
+              background: #1677ff;
+            }
+            .bar.completed {
+              background: #52c41a;
+            }
+            .bar-value {
+              position: absolute;
+              top: -20px;
+              left: 50%;
+              transform: translateX(-50%);
+              font-size: 12px;
+              color: #262626;
+              white-space: nowrap;
+            }
+            .bar-label {
+              position: absolute;
+              bottom: -25px;
+              left: 50%;
+              transform: translateX(-50%);
+              font-size: 12px;
+              color: #8c8c8c;
+              white-space: nowrap;
+            }
+            .chart-legend {
+              position: absolute;
+              bottom: 10px;
+              left: 50%;
+              transform: translateX(-50%);
+              display: flex;
+              gap: 32px;
+              font-size: 12px;
+            }
+            .legend-item {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
+            .legend-color {
+              width: 16px;
+              height: 16px;
+              border-radius: 2px;
+            }
+          </style>
+          <div class="bar-chart">
+            <div class="y-axis">
+              <div class="tick" style="bottom: calc(100% - 0px);">200</div>
+              <div class="tick" style="bottom: calc(75% - 0px);">150</div>
+              <div class="tick" style="bottom: calc(50% - 0px);">100</div>
+              <div class="tick" style="bottom: calc(25% - 0px);">50</div>
+              <div class="tick" style="bottom: 0;">0</div>
+              <div class="grid-line" style="top: 0;"></div>
+              <div class="grid-line" style="top: 25%;"></div>
+              <div class="grid-line" style="top: 50%;"></div>
+              <div class="grid-line" style="top: 75%;"></div>
+            </div>
+            <div class="x-axis"></div>
+            <div class="chart-bars">
+              <div class="bar-group">
+                <div class="bar new" style="height: 62.5%;">
+                  <span class="bar-value">125</span>
+                </div>
+                <div class="bar completed" style="height: 59%;">
+                  <span class="bar-value">118</span>
+                </div>
+                <span class="bar-label">01-01</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar new" style="height: 44.5%;">
+                  <span class="bar-value">89</span>
+                </div>
+                <div class="bar completed" style="height: 43%;">
+                  <span class="bar-value">86</span>
+                </div>
+                <span class="bar-label">01-02</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar new" style="height: 76%;">
+                  <span class="bar-value">152</span>
+                </div>
+                <div class="bar completed" style="height: 74%;">
+                  <span class="bar-value">148</span>
+                </div>
+                <span class="bar-label">01-03</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar new" style="height: 39%;">
+                  <span class="bar-value">78</span>
+                </div>
+                <div class="bar completed" style="height: 37.5%;">
+                  <span class="bar-value">75</span>
+                </div>
+                <span class="bar-label">01-04</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar new" style="height: 99%;">
+                  <span class="bar-value">198</span>
+                </div>
+                <div class="bar completed" style="height: 96%;">
+                  <span class="bar-value">192</span>
+                </div>
+                <span class="bar-label">01-05</span>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-color" style="background: #1677ff;"></div>
+                <span>新建工单量</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background: #52c41a;"></div>
+                <span>完成工单量</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 表格区域 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: 16px; font-weight: 600;">数据明细</h3>
+          <button class="btn" type="button">导出</button>
+        </div>
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>新建工单量</th>
+              <th>完成工单量</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-01-01</td>
+              <td>125</td>
+              <td>118</td>
+            </tr>
+            <tr>
+              <td>2024-01-02</td>
+              <td>89</td>
+              <td>86</td>
+            </tr>
+            <tr>
+              <td>2024-01-03</td>
+              <td>152</td>
+              <td>148</td>
+            </tr>
+            <tr>
+              <td>2024-01-04</td>
+              <td>78</td>
+              <td>75</td>
+            </tr>
+            <tr>
+              <td>2024-01-05</td>
+              <td>198</td>
+              <td>192</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span style="color: var(--ant-text-secondary); margin-right: 16px;">共 56 条记录</span>
+          <button class="btn">&lt;</button>
+          <button class="btn is-active">1</button>
+          <button class="btn">2</button>
+          <button class="btn">3</button>
+          <button class="btn">4</button>
+          <button class="btn">5</button>
+          <button class="btn">&gt;</button>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
