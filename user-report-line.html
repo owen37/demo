@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>报表展示 - 报表管理系统</title>
+  <title>工单量趋势 - 报表管理系统</title>
   <style>
     :root {
       --ant-primary: #1677ff;
@@ -109,22 +109,6 @@
       display: block;
     }
 
-    .menu-item-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .menu-arrow {
-      transition: transform 0.2s;
-      font-size: 10px;
-    }
-
-    .menu-parent.open .menu-arrow {
-      transform: rotate(180deg);
-    }
-
     .menu-item:hover {
       background: rgba(255, 255, 255, 0.1);
     }
@@ -172,12 +156,6 @@
 
     .breadcrumb a:hover {
       color: var(--ant-primary);
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .page-header,
@@ -316,25 +294,6 @@
       background: var(--ant-bg-subtle);
     }
 
-    .pagination {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 16px;
-      align-items: center;
-    }
-
-    .pagination .btn {
-      min-width: 32px;
-      padding: 4px 8px;
-    }
-
-    .pagination .btn.is-active {
-      background: var(--ant-primary);
-      border-color: var(--ant-primary);
-      color: #fff;
-    }
-
     .chart-container {
       width: 100%;
       height: 400px;
@@ -345,42 +304,6 @@
       justify-content: center;
       margin-bottom: 24px;
       position: relative;
-    }
-
-    .chart-placeholder {
-      text-align: center;
-      color: var(--ant-text-secondary);
-    }
-
-    .chart-placeholder .icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-    }
-
-    .report-tabs {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--ant-border-subtle);
-      padding-bottom: 0;
-    }
-
-    .report-tab {
-      padding: 12px 0;
-      cursor: pointer;
-      color: var(--ant-text-secondary);
-      transition: color 0.2s;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }
-
-    .report-tab:hover {
-      color: var(--ant-text);
-    }
-
-    .report-tab.is-active {
-      color: var(--ant-primary);
-      border-bottom-color: var(--ant-primary);
     }
 
     @media (max-width: 960px) {
@@ -429,8 +352,8 @@
   <main class="app-shell">
     <aside class="sidebar">
       <nav class="sidebar-menu">
-        <a href="user-report-view.html" class="menu-item is-active">上门工单趋势</a>
-        <a href="user-report-line.html" class="menu-item">工单量趋势</a>
+        <a href="user-report-view.html" class="menu-item">上门工单趋势</a>
+        <a href="user-report-line.html" class="menu-item is-active">工单量趋势</a>
         <a href="user-report-bar.html" class="menu-item">服务类型分布</a>
         <a href="user-report-pie.html" class="menu-item">工单状态占比</a>
         <a href="user-report-table.html" class="menu-item">工单明细</a>
@@ -440,13 +363,12 @@
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumb">
-            <a href="index.html">首页</a> / 上门工单趋势
+            <a href="index.html">首页</a> / 工单量趋势
           </div>
         </div>
         <div class="topbar-right"></div>
       </header>
 
-      <!-- 查询筛选区域 -->
       <section class="filter-panel">
         <div class="filter-row">
           <label class="form-field">
@@ -473,12 +395,10 @@
         </div>
       </section>
 
-      <!-- 报表展示区域 - 图表+表格组合模式 -->
       <section class="data-card">
-        <!-- 图表区域 -->
         <div class="chart-container" style="padding: 20px;">
           <style>
-            .bar-chart {
+            .line-chart {
               position: relative;
               width: 100%;
               height: 100%;
@@ -510,50 +430,44 @@
               right: 0;
               border-top: 1px solid #d9d9d9;
             }
-            .chart-bars {
+            .chart-lines {
               position: absolute;
               left: 80px;
               right: 0;
               top: 0;
               bottom: 60px;
+            }
+            .line-path {
+              fill: none;
+              stroke-width: 2;
+            }
+            .line-new {
+              stroke: #1677ff;
+            }
+            .line-completed {
+              stroke: #52c41a;
+            }
+            .data-point {
+              fill: #fff;
+              stroke-width: 2;
+            }
+            .point-new {
+              stroke: #1677ff;
+            }
+            .point-completed {
+              stroke: #52c41a;
+            }
+            .x-labels {
+              position: absolute;
+              bottom: 30px;
+              left: 80px;
+              right: 0;
               display: flex;
               justify-content: space-around;
-              padding: 0 40px;
             }
-            .bar-group {
-              display: flex;
-              align-items: flex-end;
-              gap: 8px;
-              position: relative;
-            }
-            .bar {
-              width: 40px;
-              border-radius: 4px 4px 0 0;
-              position: relative;
-            }
-            .bar.new {
-              background: #1677ff;
-            }
-            .bar.completed {
-              background: #52c41a;
-            }
-            .bar-value {
-              position: absolute;
-              top: -20px;
-              left: 50%;
-              transform: translateX(-50%);
-              font-size: 12px;
-              color: #262626;
-              white-space: nowrap;
-            }
-            .bar-label {
-              position: absolute;
-              bottom: -25px;
-              left: 50%;
-              transform: translateX(-50%);
+            .x-label {
               font-size: 12px;
               color: #8c8c8c;
-              white-space: nowrap;
             }
             .chart-legend {
               position: absolute;
@@ -571,70 +485,51 @@
             }
             .legend-color {
               width: 16px;
-              height: 16px;
+              height: 4px;
               border-radius: 2px;
             }
           </style>
-          <div class="bar-chart">
+          <div class="line-chart">
             <div class="y-axis">
-              <div class="tick" style="bottom: calc(100% - 0px);">200</div>
-              <div class="tick" style="bottom: calc(75% - 0px);">150</div>
-              <div class="tick" style="bottom: calc(50% - 0px);">100</div>
-              <div class="tick" style="bottom: calc(25% - 0px);">50</div>
+              <div class="tick" style="bottom: calc(100% - 0px);">500</div>
+              <div class="tick" style="bottom: calc(80% - 0px);">400</div>
+              <div class="tick" style="bottom: calc(60% - 0px);">300</div>
+              <div class="tick" style="bottom: calc(40% - 0px);">200</div>
+              <div class="tick" style="bottom: calc(20% - 0px);">100</div>
               <div class="tick" style="bottom: 0;">0</div>
               <div class="grid-line" style="top: 0;"></div>
-              <div class="grid-line" style="top: 25%;"></div>
-              <div class="grid-line" style="top: 50%;"></div>
-              <div class="grid-line" style="top: 75%;"></div>
+              <div class="grid-line" style="top: 20%;"></div>
+              <div class="grid-line" style="top: 40%;"></div>
+              <div class="grid-line" style="top: 60%;"></div>
+              <div class="grid-line" style="top: 80%;"></div>
             </div>
             <div class="x-axis"></div>
-            <div class="chart-bars">
-              <div class="bar-group">
-                <div class="bar new" style="height: 62.5%;">
-                  <span class="bar-value">125</span>
-                </div>
-                <div class="bar completed" style="height: 59%;">
-                  <span class="bar-value">118</span>
-                </div>
-                <span class="bar-label">01-01</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar new" style="height: 44.5%;">
-                  <span class="bar-value">89</span>
-                </div>
-                <div class="bar completed" style="height: 43%;">
-                  <span class="bar-value">86</span>
-                </div>
-                <span class="bar-label">01-02</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar new" style="height: 76%;">
-                  <span class="bar-value">152</span>
-                </div>
-                <div class="bar completed" style="height: 74%;">
-                  <span class="bar-value">148</span>
-                </div>
-                <span class="bar-label">01-03</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar new" style="height: 39%;">
-                  <span class="bar-value">78</span>
-                </div>
-                <div class="bar completed" style="height: 37.5%;">
-                  <span class="bar-value">75</span>
-                </div>
-                <span class="bar-label">01-04</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar new" style="height: 99%;">
-                  <span class="bar-value">198</span>
-                </div>
-                <div class="bar completed" style="height: 96%;">
-                  <span class="bar-value">192</span>
-                </div>
-                <span class="bar-label">01-05</span>
-              </div>
+            <div class="x-labels">
+              <div class="x-label">1月</div>
+              <div class="x-label">2月</div>
+              <div class="x-label">3月</div>
+              <div class="x-label">4月</div>
+              <div class="x-label">5月</div>
+              <div class="x-label">6月</div>
             </div>
+            <svg class="chart-lines" viewBox="0 0 1000 340">
+              <polyline class="line-path line-new" points="0,204 166,136 333,170 500,102 666,68 832,34 1000,68" />
+              <polyline class="line-path line-completed" points="0,210 166,144 333,176 500,108 666,74 832,40 1000,74" />
+              <circle class="data-point point-new" cx="0" cy="204" r="5" />
+              <circle class="data-point point-new" cx="166" cy="136" r="5" />
+              <circle class="data-point point-new" cx="333" cy="170" r="5" />
+              <circle class="data-point point-new" cx="500" cy="102" r="5" />
+              <circle class="data-point point-new" cx="666" cy="68" r="5" />
+              <circle class="data-point point-new" cx="832" cy="34" r="5" />
+              <circle class="data-point point-new" cx="1000" cy="68" r="5" />
+              <circle class="data-point point-completed" cx="0" cy="210" r="5" />
+              <circle class="data-point point-completed" cx="166" cy="144" r="5" />
+              <circle class="data-point point-completed" cx="333" cy="176" r="5" />
+              <circle class="data-point point-completed" cx="500" cy="108" r="5" />
+              <circle class="data-point point-completed" cx="666" cy="74" r="5" />
+              <circle class="data-point point-completed" cx="832" cy="40" r="5" />
+              <circle class="data-point point-completed" cx="1000" cy="74" r="5" />
+            </svg>
             <div class="chart-legend">
               <div class="legend-item">
                 <div class="legend-color" style="background: #1677ff;"></div>
@@ -648,7 +543,6 @@
           </div>
         </div>
 
-        <!-- 表格区域 -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
           <h3 style="margin: 0; font-size: 16px; font-weight: 600;">数据明细</h3>
           <button class="btn" type="button">导出</button>
@@ -656,50 +550,49 @@
         <table class="pro-table">
           <thead>
             <tr>
-              <th>日期</th>
+              <th>月份</th>
               <th>新建工单量</th>
               <th>完成工单量</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>2024-01-01</td>
-              <td>125</td>
-              <td>118</td>
+              <td>2024-01</td>
+              <td>220</td>
+              <td>210</td>
             </tr>
             <tr>
-              <td>2024-01-02</td>
-              <td>89</td>
-              <td>86</td>
+              <td>2024-02</td>
+              <td>320</td>
+              <td>305</td>
             </tr>
             <tr>
-              <td>2024-01-03</td>
-              <td>152</td>
-              <td>148</td>
+              <td>2024-03</td>
+              <td>270</td>
+              <td>260</td>
             </tr>
             <tr>
-              <td>2024-01-04</td>
-              <td>78</td>
-              <td>75</td>
+              <td>2024-04</td>
+              <td>370</td>
+              <td>355</td>
             </tr>
             <tr>
-              <td>2024-01-05</td>
-              <td>198</td>
-              <td>192</td>
+              <td>2024-05</td>
+              <td>420</td>
+              <td>405</td>
+            </tr>
+            <tr>
+              <td>2024-06</td>
+              <td>470</td>
+              <td>455</td>
+            </tr>
+            <tr>
+              <td>2024-07</td>
+              <td>420</td>
+              <td>405</td>
             </tr>
           </tbody>
         </table>
-
-        <div class="pagination">
-          <span style="color: var(--ant-text-secondary); margin-right: 16px;">共 56 条记录</span>
-          <button class="btn">&lt;</button>
-          <button class="btn is-active">1</button>
-          <button class="btn">2</button>
-          <button class="btn">3</button>
-          <button class="btn">4</button>
-          <button class="btn">5</button>
-          <button class="btn">&gt;</button>
-        </div>
       </section>
     </section>
   </main>
